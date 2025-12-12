@@ -262,3 +262,56 @@ body {
   .solution-text h2 { font-size: 32px; }
   .btn-dark { width: 100%; justify-content: center; }
 }
+/* --- FEATURES INTRO SECTION --- */
+.features-intro {
+  padding: 100px 5%;
+  background: white; /* Clean white again for contrast */
+  text-align: center;
+}
+
+.features-content {
+  max-width: 800px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* The Pill Badge */
+.feature-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  /* Brand Blue Background (Light) */
+  background: rgba(13, 110, 253, 0.1);
+  color: var(--brand-blue);
+  padding: 8px 20px;
+  border-radius: 50px;
+  font-weight: 600;
+  font-size: 14px;
+  margin-bottom: 24px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.features-intro h2 {
+  font-size: clamp(32px, 4vw, 48px);
+  font-weight: 800;
+  color: var(--brand-dark);
+  margin-bottom: 20px;
+  line-height: 1.2;
+}
+
+.features-intro p {
+  font-size: 18px;
+  color: #555;
+  line-height: 1.8;
+  max-width: 700px;
+}
+
+/* Mobile Tweak for Features Intro */
+@media (max-width: 768px) {
+  .features-intro {
+    padding: 60px 5%;
+  }
+}

@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { 
   ChevronDown, Globe, Menu, X, PlayCircle, 
   Users, Building2, ShieldCheck, Store, Zap,
-  MapPin, Home, ArrowRight // Added ArrowRight
+  MapPin, Home, ArrowRight, Sparkles // Added Sparkles
 } from "lucide-react";
 
 function App() {
@@ -29,7 +29,6 @@ function App() {
 
   // Images
   const heroImage = "https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-4.0.3&auto=format&fit=crop&w=2426&q=80";
-  // New Image for the Solution Section
   const solutionImage = "https://images.unsplash.com/photo-1497366216548-37526070297c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1469&q=80";
 
   useEffect(() => {
@@ -45,9 +44,9 @@ function App() {
 
   // Data for the Stats Section
   const statsData = [
-    { icon: <MapPin size={32} />, number: "4 States", label: "Across Nigeria" },
-    { icon: <Home size={32} />, number: "1,000+", label: "Property Units" },
-    { icon: <Users size={32} />, number: "5,000+", label: "Residents" },
+    { icon: <MapPin size={32} />, number: "14 Cities", label: "Across Africa" },
+    { icon: <Home size={32} />, number: "40,000", label: "Property Units" },
+    { icon: <Users size={32} />, number: "48,000", label: "Residents" },
   ];
 
   // Animation variants
@@ -249,10 +248,9 @@ function App() {
         </motion.div>
       </section>
 
-      {/* --- NEW: All-in-One Solution Section --- */}
+      {/* --- All-in-One Solution Section --- */}
       <section className="solution-section">
         <div className="solution-container">
-          {/* Left Text */}
           <motion.div 
             className="solution-text"
             initial={{ opacity: 0, x: -50 }}
@@ -271,7 +269,6 @@ function App() {
             </button>
           </motion.div>
 
-          {/* Right Image */}
           <motion.div 
             className="solution-image"
             initial={{ opacity: 0, x: 50 }}
@@ -284,6 +281,27 @@ function App() {
             </div>
           </motion.div>
         </div>
+      </section>
+
+      {/* --- NEW: Features Intro Section --- */}
+      <section className="features-intro">
+        <motion.div
+           initial={{ opacity: 0, y: 20 }}
+           whileInView={{ opacity: 1, y: 0 }}
+           viewport={{ once: true }}
+           transition={{ duration: 0.8 }}
+           className="features-content"
+        >
+          <div className="feature-badge">
+             <Sparkles size={16} /> Discover our key features
+          </div>
+          <h2>Simplifying Living Experiences Across Africa</h2>
+          <p>
+            We elevate residential community management with our software! 
+            Simplifying operations and enhancing access to communal services 
+            for owners and occupants.
+          </p>
+        </motion.div>
       </section>
 
     </div>
