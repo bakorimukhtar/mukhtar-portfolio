@@ -1,0 +1,251 @@
+/* EXPERIENCE PAGE */
+
+.experience-page {
+    position: relative;
+    z-index: 1;
+  }
+  
+  /* HEADER */
+  
+  .experience-hero {
+    margin-bottom: 26px;
+  }
+  
+  .experience-hero-left {
+    max-width: 640px;
+  }
+  
+  .experience-title {
+    margin: 0 0 10px;
+    font-size: clamp(26px, 3vw, 32px);
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+    color: #f9fafb;
+  }
+  
+  .experience-title-gradient {
+    background: linear-gradient(120deg, #38bdf8, #6366f1, #a855f7);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  
+  .experience-subtitle {
+    margin: 0;
+    font-size: 14px;
+    color: #9ca3af;
+  }
+  
+  /* GRID LAYOUT */
+  
+  .experience-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+    gap: 24px;
+  }
+  
+  .experience-column {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  
+  .experience-column-right {
+    gap: 14px;
+  }
+  
+  .experience-section-title {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #e5e7eb;
+    margin: 0 0 4px;
+  }
+  
+  .experience-section-title svg {
+    color: #38bdf8;
+  }
+  
+  /* TIMELINE */
+  
+  .timeline {
+    border-left: 1px solid rgba(148, 163, 184, 0.55);
+    margin-left: 8px;
+    padding-left: 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  
+  .timeline-item {
+    position: relative;
+  }
+  
+  .timeline-marker {
+    position: absolute;
+    left: -27px;
+    top: 4px;
+    width: 11px;
+    height: 11px;
+    border-radius: 999px;
+    background: #38bdf8;
+    box-shadow: 0 0 0 5px rgba(56, 189, 248, 0.18);
+  }
+  
+  .timeline-content {
+    border-radius: 16px;
+    padding: 12px 14px;
+    background: radial-gradient(
+        circle at 0 0,
+        rgba(56, 189, 248, 0.15),
+        rgba(15, 23, 42, 0.98)
+      );
+    border: 1px solid rgba(148, 163, 184, 0.6);
+  }
+  
+  .timeline-heading h3 {
+    margin: 0;
+    font-size: 14px;
+    color: #f9fafb;
+  }
+  
+  .timeline-org {
+    display: block;
+    font-size: 12px;
+    color: #cbd5f5;
+    margin-top: 2px;
+  }
+  
+  .timeline-meta {
+    display: block;
+    font-size: 11px;
+    color: #9ca3af;
+    margin-top: 2px;
+  }
+  
+  .timeline-list {
+    margin: 8px 0 0;
+    padding-left: 16px;
+    font-size: 12px;
+    color: #e5e7eb;
+  }
+  
+  .timeline-list li {
+    margin-bottom: 4px;
+  }
+  
+  /* RIGHT COLUMN CARDS */
+  
+  .experience-card {
+    border-radius: 18px;
+    padding: 12px 14px 12px;
+    background: radial-gradient(
+        circle at 0 0,
+        rgba(129, 140, 248, 0.18),
+        rgba(15, 23, 42, 0.98)
+      );
+    border: 1px solid rgba(148, 163, 184, 0.6);
+  }
+  
+  .experience-card-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+  }
+  
+  .experience-card-header h2 {
+    margin: 0;
+    font-size: 13px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #e5e7eb;
+  }
+  
+  .experience-card-header svg {
+    color: #38bdf8;
+  }
+  
+  .experience-card-body h3 {
+    margin: 0 0 4px;
+    font-size: 14px;
+    color: #f9fafb;
+  }
+  
+  .experience-card-meta {
+    margin: 0;
+    font-size: 12px;
+    color: #cbd5f5;
+  }
+  
+  /* SKILLS GRID */
+  
+  .skills-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 8px;
+  }
+  
+  .skill-block {
+    border-radius: 12px;
+    padding: 8px 10px;
+    background: rgba(15, 23, 42, 0.95);
+    border: 1px solid rgba(148, 163, 184, 0.6);
+  }
+  
+  .skill-label {
+    display: block;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #9ca3af;
+    margin-bottom: 2px;
+  }
+  
+  .skill-value {
+    font-size: 12px;
+    color: #e5e7eb;
+  }
+  
+  /* LISTS */
+  
+  .chip-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    font-size: 12px;
+    color: #e5e7eb;
+  }
+  
+  .chip-list li {
+    position: relative;
+    padding-left: 14px;
+    margin-bottom: 5px;
+  }
+  
+  .chip-list li::before {
+    content: "";
+    position: absolute;
+    left: 2px;
+    top: 7px;
+    width: 4px;
+    height: 4px;
+    border-radius: 999px;
+    background: #38bdf8;
+  }
+  
+  /* RESPONSIVE */
+  
+  @media (max-width: 960px) {
+    .experience-grid {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  
+    .timeline {
+      margin-left: 4px;
+    }
+  }
+  
