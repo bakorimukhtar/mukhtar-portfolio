@@ -1,238 +1,269 @@
 import React, { useState } from "react";
 import "./Contact.css";
 import { motion, AnimatePresence } from "framer-motion";
-import { Mail, Phone, MapPin, CheckCircle, X } from "lucide-react";
+import { Mail, Phone, MapPin, CheckCircle, X, HelpCircle } from "lucide-react";
 
 const Contact = () => {
   const [formData, setFormData] = useState({
     fullName: "",
-    organization: "",
     email: "",
     phone: "",
-    state: "Lagos",
-    customState: "", // New field for "Other" text
-    purpose: "enquiry",
-    message: ""
+    childName: "",
+    purpose: "admissions",
+    message: "",
   });
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showModal, setShowModal] = useState(false);
 
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     setIsSubmitting(true);
 
-    // Simulate API call delay
     setTimeout(() => {
-      console.log("Form Submitted:", formData);
+      console.log("Afkar contact form submitted:", formData);
       setIsSubmitting(false);
-      setShowModal(true); // Show success modal
-      
-      // Optional: Reset form here
-      // setFormData({ ...formData, message: "", fullName: "" }); 
-    }, 1500);
+      setShowModal(true);
+      // optional reset:
+      // setFormData({ fullName: "", email: "", phone: "", childName: "", purpose: "admissions", message: "" });
+    }, 1200);
   };
 
-  const closeModal = () => {
-    setShowModal(false);
-  };
+  const closeModal = () => setShowModal(false);
 
   return (
-    <motion.div 
+    <motion.div
       className="contact-page"
-      initial={{ opacity: 0, y: 20 }} 
-      animate={{ opacity: 1, y: 0 }} 
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0 }}
       transition={{ duration: 0.5 }}
     >
-      <div className="contact-header">
-        <h1>Let's Talk</h1>
-        <p>Get in touch with our team to schedule a demo or make an enquiry.</p>
-      </div>
+      {/* HEADER */}
+      <header className="contact-header">
+        <h1>Contact Afkar Schools</h1>
+        <p>
+          Reach out to ask about admissions, academics, fees or any other
+          questions about our Nursery, Primary and Secondary schools.
+        </p>
+      </header>
 
       <div className="contact-container">
-        {/* Left Side: Contact Info */}
-        <div className="contact-info-box">
-          <h3>Get in touch</h3>
-          <p className="info-desc">We'd love to hear from you. Our team is always here to chat.</p>
-          
-          <div className="info-item">
-            <div className="icon-box"><Mail size={20} /></div> 
-            <span>hello@soloequations.com</span>
-          </div>
-          <div className="info-item">
-            <div className="icon-box"><Phone size={20} /></div> 
-            <span>+234 800 000 0000</span>
-          </div>
-          <div className="info-item">
-            <div className="icon-box"><MapPin size={20} /></div> 
-            <span>Lagos, Nigeria</span>
-          </div>
-        </div>
+        {/* LEFT: SCHOOL DETAILS */}
+        <section className="contact-info-box">
+          <h3>School contact details</h3>
+          <p className="info-desc">
+            Our office is open during school hours on weekdays. You can call,
+            send an email, or visit the campus in person.
+          </p>
 
-        {/* Right Side: The Form */}
+          <div className="info-item">
+            <div className="icon-box">
+              <Mail size={20} />
+            </div>
+            <div>
+              <span className="info-label">General enquiries</span>
+              <span>contact@afkar.edu.ng</span>
+            </div>
+          </div>
+
+          <div className="info-item">
+            <div className="icon-box">
+              <Mail size={20} />
+            </div>
+            <div>
+              <span className="info-label">Admissions</span>
+              <span>admission@afkar.edu.ng</span>
+            </div>
+          </div>
+
+          <div className="info-item">
+            <div className="icon-box">
+              <Phone size={20} />
+            </div>
+            <div>
+              <span className="info-label">Phone</span>
+              <span>+234 801 234 5678</span>
+            </div>
+          </div>
+
+          <div className="info-item">
+            <div className="icon-box">
+              <MapPin size={20} />
+            </div>
+            <div>
+              <span className="info-label">Address</span>
+              <span>
+                UMARU MUSA YAR&apos;ADUA WAY, Adjacent New Government House,
+                Modoji, Katsina, Katsina State, Nigeria.
+              </span>
+            </div>
+          </div>
+
+          <div className="info-note">
+            <HelpCircle size={18} />
+            <span>
+              For admission forms and entrance examinations, please visit the
+              school campus.
+            </span>
+          </div>
+        </section>
+
+        {/* RIGHT: FORM */}
         <form className="contact-form" onSubmit={handleSubmit}>
           <div className="form-group">
-            <label>Full Name</label>
-            <input 
-              type="text" 
-              name="fullName" 
-              placeholder="Enter your full name" 
-              required 
+            <label>Full name</label>
+            <input
+              type="text"
+              name="fullName"
+              placeholder="Your full name"
+              required
               value={formData.fullName}
-              onChange={handleChange} 
-            />
-          </div>
-
-          <div className="form-group">
-            <label>Organization</label>
-            <input 
-              type="text" 
-              name="organization" 
-              placeholder="Company or Estate Name" 
-              value={formData.organization}
-              onChange={handleChange} 
+              onChange={handleChange}
             />
           </div>
 
           <div className="form-grid-2">
             <div className="form-group">
-              <label>Email Address</label>
-              <input 
-                type="email" 
-                name="email" 
-                placeholder="you@example.com" 
-                required 
+              <label>Email address</label>
+              <input
+                type="email"
+                name="email"
+                placeholder="you@email.com"
+                required
                 value={formData.email}
-                onChange={handleChange} 
+                onChange={handleChange}
               />
             </div>
 
             <div className="form-group">
-              <label>Mobile Number</label>
-              <input 
-                type="tel" 
-                name="phone" 
-                placeholder="+234..." 
-                required 
+              <label>Mobile number</label>
+              <input
+                type="tel"
+                name="phone"
+                placeholder="+234..."
+                required
                 value={formData.phone}
-                onChange={handleChange} 
+                onChange={handleChange}
               />
             </div>
           </div>
 
           <div className="form-group">
-            <label>State</label>
-            <select name="state" value={formData.state} onChange={handleChange}>
-              <option value="Lagos">Lagos</option>
-              <option value="Abuja">Abuja</option>
-              <option value="Kaduna">Kaduna</option>
-              <option value="Kano">Kano</option>
-              <option value="Other">Other</option>
-            </select>
+            <label>Child&apos;s name (optional)</label>
+            <input
+              type="text"
+              name="childName"
+              placeholder="Enter your child’s name"
+              value={formData.childName}
+              onChange={handleChange}
+            />
           </div>
 
-          {/* Conditional "Other" Input with Animation */}
-          <AnimatePresence>
-            {formData.state === "Other" && (
-              <motion.div 
-                className="form-group"
-                initial={{ opacity: 0, height: 0 }}
-                animate={{ opacity: 1, height: "auto" }}
-                exit={{ opacity: 0, height: 0 }}
-                transition={{ duration: 0.3 }}
-                style={{ overflow: "hidden" }}
-              >
-                <label>Please Specify State</label>
-                <input 
-                  type="text" 
-                  name="customState" 
-                  placeholder="Enter your state" 
-                  required 
-                  value={formData.customState}
-                  onChange={handleChange} 
-                  className="input-highlight"
-                />
-              </motion.div>
-            )}
-          </AnimatePresence>
-
           <div className="form-group radio-group">
-            <label>I want to:</label>
+            <label>I&apos;m contacting the school about:</label>
             <div className="radio-options">
-              <label className={`radio-btn ${formData.purpose === 'demo' ? 'active' : ''}`}>
-                <input 
-                  type="radio" 
-                  name="purpose" 
-                  value="demo" 
-                  checked={formData.purpose === 'demo'} 
-                  onChange={handleChange} 
-                /> 
-                Schedule a Demo
+              <label
+                className={`radio-btn ${
+                  formData.purpose === "admissions" ? "active" : ""
+                }`}
+              >
+                <input
+                  type="radio"
+                  name="purpose"
+                  value="admissions"
+                  checked={formData.purpose === "admissions"}
+                  onChange={handleChange}
+                />
+                Admissions / enrolment
               </label>
-              <label className={`radio-btn ${formData.purpose === 'enquiry' ? 'active' : ''}`}>
-                <input 
-                  type="radio" 
-                  name="purpose" 
-                  value="enquiry" 
-                  checked={formData.purpose === 'enquiry'} 
-                  onChange={handleChange} 
-                /> 
-                Make an Enquiry
+              <label
+                className={`radio-btn ${
+                  formData.purpose === "academics" ? "active" : ""
+                }`}
+              >
+                <input
+                  type="radio"
+                  name="purpose"
+                  value="academics"
+                  checked={formData.purpose === "academics"}
+                  onChange={handleChange}
+                />
+                Academics / results
+              </label>
+              <label
+                className={`radio-btn ${
+                  formData.purpose === "other" ? "active" : ""
+                }`}
+              >
+                <input
+                  type="radio"
+                  name="purpose"
+                  value="other"
+                  checked={formData.purpose === "other"}
+                  onChange={handleChange}
+                />
+                Other enquiries
               </label>
             </div>
           </div>
 
           <div className="form-group">
             <label>Message</label>
-            <textarea 
-              name="message" 
-              rows="4" 
-              placeholder="How can we help you?" 
-              required 
+            <textarea
+              name="message"
+              rows="4"
+              placeholder="Tell us how we can help you."
+              required
               value={formData.message}
               onChange={handleChange}
             ></textarea>
           </div>
 
           <button type="submit" className="submit-btn" disabled={isSubmitting}>
-            {isSubmitting ? "Sending..." : "Submit Request"}
+            {isSubmitting ? "Sending..." : "Send message"}
           </button>
         </form>
       </div>
 
-      {/* --- SUCCESS MODAL --- */}
+      {/* SUCCESS MODAL */}
       <AnimatePresence>
         {showModal && (
-          <motion.div 
+          <motion.div
             className="modal-overlay"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
           >
-            <motion.div 
+            <motion.div
               className="modal-card"
-              initial={{ scale: 0.8, opacity: 0 }}
+              initial={{ scale: 0.86, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.8, opacity: 0 }}
-              transition={{ type: "spring", damping: 25, stiffness: 300 }}
+              exit={{ scale: 0.86, opacity: 0 }}
+              transition={{ type: "spring", damping: 24, stiffness: 260 }}
             >
-              <button className="close-modal-btn" onClick={closeModal}><X size={20}/></button>
+              <button className="close-modal-btn" onClick={closeModal}>
+                <X size={20} />
+              </button>
               <div className="modal-icon">
                 <CheckCircle size={48} />
               </div>
-              <h2>Request Submitted!</h2>
-              <p>Thank you for reaching out. A member of the Solo Equations team will get back to you shortly.</p>
-              <button className="modal-action-btn" onClick={closeModal}>Got it</button>
+              <h2>Message received</h2>
+              <p>
+                Thank you for contacting Afkar Schools. A member of our team
+                will respond as soon as possible during office hours.
+              </p>
+              <button className="modal-action-btn" onClick={closeModal}>
+                Close
+              </button>
             </motion.div>
           </motion.div>
         )}
       </AnimatePresence>
-
     </motion.div>
   );
 };

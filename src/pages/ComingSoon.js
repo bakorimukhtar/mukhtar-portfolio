@@ -5,44 +5,45 @@ import { Hammer, ArrowLeft, Rocket } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const ComingSoon = () => {
-    // <--- 2. Add this block at the top of your component
   useEffect(() => {
-    document.title = "Coming Soon | Solo Equations"; 
+    document.title = "Coming Soon | Afkar Schools";
   }, []);
+
   return (
     <div className="coming-soon-container">
-      <motion.div 
+      <motion.div
         className="coming-soon-card"
-        initial={{ opacity: 0, scale: 0.9 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 0.5 }}
+        initial={{ opacity: 0, scale: 0.9, y: 20 }}
+        animate={{ opacity: 1, scale: 1, y: 0 }}
+        transition={{ duration: 0.45 }}
       >
         <div className="icon-wrapper">
           <motion.div
-            animate={{ rotate: [0, -10, 10, -10, 0] }}
-            transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
+            animate={{ rotate: [0, -8, 8, -8, 0] }}
+            transition={{ repeat: Infinity, duration: 2.2, ease: "easeInOut" }}
           >
-            <Hammer size={64} color="#0d6efd" />
+            <Hammer size={56} color="#007f5f" />
           </motion.div>
           <motion.div
-            initial={{ x: -20, y: 20, opacity: 0 }}
+            initial={{ x: -18, y: 18, opacity: 0 }}
             animate={{ x: 0, y: 0, opacity: 1 }}
             transition={{ delay: 0.5, duration: 0.5 }}
-            style={{ position: 'absolute', top: -10, right: -10 }}
+            className="icon-rocket"
           >
-             <Rocket size={32} color="#00ff88" />
+            <Rocket size={30} color="#22c55e" />
           </motion.div>
         </div>
 
-        <h1>Under Construction</h1>
+        <h1>Page coming soon</h1>
         <p>
-          We are currently working hard to build this page. <br />
-          Stay tuned for something amazing!
+          This section of the Afkar Schools website is currently being prepared.
+          Please check back shortly for updated information and resources.
         </p>
 
         <Link to="/">
           <button className="back-home-btn">
-            <ArrowLeft size={18} /> Back to Home
+            <ArrowLeft size={18} />
+            Back to Home
           </button>
         </Link>
       </motion.div>

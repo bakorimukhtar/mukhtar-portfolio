@@ -7,34 +7,31 @@ const Chatbot = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [message, setMessage] = useState("");
 
-  // REPLACE THIS WITH YOUR ACTUAL WHATSAPP NUMBER
-  const supportNumber = "2347026842722"; 
+  // Afkar WhatsApp number (change if needed)
+  const supportNumber = "2347026842722";
 
   const toggleChat = () => {
-    setIsOpen(!isOpen);
+    setIsOpen((prev) => !prev);
   };
 
   const handleSend = (e) => {
     e.preventDefault();
     if (!message.trim()) return;
 
-    // Construct WhatsApp URL
-    const whatsappUrl = `https://wa.me/${supportNumber}?text=${encodeURIComponent(message)}`;
-    
-    // Open in new tab
+    const whatsappUrl = `https://wa.me/${supportNumber}?text=${encodeURIComponent(
+      message
+    )}`;
+
     window.open(whatsappUrl, "_blank");
-    
-    // Optional: Clear message or close chat
     setMessage("");
   };
 
   return (
     <div className="chatbot-container">
-      
-      {/* --- Chat Window --- */}
+      {/* Chat window */}
       <AnimatePresence>
         {isOpen && (
-          <motion.div 
+          <motion.div
             className="chat-window"
             initial={{ opacity: 0, y: 20, scale: 0.95 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
@@ -43,10 +40,10 @@ const Chatbot = () => {
           >
             <div className="chat-header">
               <div className="chat-header-info">
-                <div className="status-dot"></div>
+                <div className="status-dot" />
                 <div>
-                  <h4>Solo Support</h4>
-                  <span>Online</span>
+                  <h4>Afkar Support</h4>
+                  <span>Typically replies within a few minutes</span>
                 </div>
               </div>
               <button onClick={toggleChat} className="close-chat-btn">
@@ -60,15 +57,17 @@ const Chatbot = () => {
                   <User size={16} />
                 </div>
                 <div className="msg-bubble">
-                  Hi there! 👋 <br/> How can we help you optimize your community today?
+                  Assalamu alaikum 👋 <br />
+                  How can Afkar Schools assist you today with admissions,
+                  academics or general enquiries?
                 </div>
               </div>
             </div>
 
             <form className="chat-footer" onSubmit={handleSend}>
-              <input 
-                type="text" 
-                placeholder="Type your message..." 
+              <input
+                type="text"
+                placeholder="Type your message for Afkar Schools..."
                 value={message}
                 onChange={(e) => setMessage(e.target.value)}
               />
@@ -80,16 +79,16 @@ const Chatbot = () => {
         )}
       </AnimatePresence>
 
-      {/* --- Floating Button --- */}
-      <motion.button 
-        className={`chat-toggle-btn ${isOpen ? 'open' : ''}`}
+      {/* Floating button */}
+      <motion.button
+        className={`chat-toggle-btn ${isOpen ? "open" : ""}`}
         onClick={toggleChat}
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.9 }}
+        aria-label="Chat with Afkar Schools on WhatsApp"
       >
-        {isOpen ? <X size={28} /> : <MessageCircle size={28} />}
+        {isOpen ? <X size={26} /> : <MessageCircle size={26} />}
       </motion.button>
-
     </div>
   );
 };

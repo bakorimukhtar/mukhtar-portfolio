@@ -1,221 +1,398 @@
 // src/App.js
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./App.css";
-import { Routes, Route, Link, useLocation } from "react-router-dom"; 
+import { Routes, Route, Link, useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { ChevronDown, Globe, Menu, X, Facebook, Twitter, Instagram, Linkedin, Apple, Play } from "lucide-react";
+import {
+  ChevronDown,
+  Globe,
+  Menu,
+  X,
+  MapPin,
+  Phone,
+  FileText,
+  Users,
+  Facebook,
+  Twitter,
+  Instagram,
+  Linkedin,
+  Mail,
+} from "lucide-react";
 
 // --- IMPORT PAGES ---
 import Home from "./pages/Home";
-import Contact from "./pages/Contact";
 import About from "./pages/About";
-import ComingSoon from "./pages/ComingSoon"; // <--- 1. IMPORT NEW PAGE
+import Admissions from "./pages/Admissions";
+import Academics from "./pages/Academics";
+import Contact from "./pages/Contact";
+import StudentPortal from "./pages/StudentPortal";
+import ComingSoon from "./pages/ComingSoon";
 
 // --- IMPORT COMPONENTS ---
 import Chatbot from "./components/Chatbot";
 
 // --- ASSET IMPORTS ---
-import logo from "./assets/logo.png"; 
+import logo from "./assets/Main Logo.png";
 
 function App() {
-  const [isProductOpen, setProductOpen] = useState(false);
+  const [isAcademicsOpen, setAcademicsOpen] = useState(false);
   const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const location = useLocation(); 
+  const location = useLocation();
 
-  const toggleProducts = () => {
-    setProductOpen(!isProductOpen);
+  const toggleAcademics = () => {
+    setAcademicsOpen((prev) => !prev);
   };
 
   const closeMenu = () => {
     setMobileMenuOpen(false);
-    setProductOpen(false);
+    setAcademicsOpen(false);
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     window.scrollTo(0, 0);
+    setAcademicsOpen(false);
+    setMobileMenuOpen(false);
   }, [location]);
 
   return (
     <div className="App">
-      
-      {/* --- SHARED NAVBAR --- */}
+      {/* NAVBAR */}
       <nav className="navbar">
         <div className="logo-area">
           <Link to="/" onClick={closeMenu}>
-            <img src={logo} alt="Solo Equations" className="logo-img" />
+            <img src={logo} alt="Afkar Schools" className="logo-img" />
           </Link>
+          <div className="logo-text">
+            <span className="logo-title">Afkar Schools</span>
+            <span className="logo-subtitle">Knowledge and Faith</span>
+            <span className="logo-rc">Nursery • Primary • Secondary</span>
+          </div>
         </div>
 
         {/* Desktop Nav */}
         <div className="nav-center">
-          <Link to="/" className="nav-link">Home</Link>
-          
-          <div style={{position: 'relative'}}>
-            <button className={`nav-link ${isProductOpen ? 'active' : ''}`} onClick={toggleProducts}>
-              Products <ChevronDown size={16} style={{transform: isProductOpen ? 'rotate(180deg)' : 'rotate(0deg)', transition: '0.2s'}}/>
+          <Link to="/" className="nav-link">
+            Home
+          </Link>
+
+          <Link to="/about" className="nav-link">
+            About
+          </Link>
+
+          <Link to="/admissions" className="nav-link">
+            Admissions
+          </Link>
+
+          <div style={{ position: "relative" }}>
+            <button
+              className={`nav-link ${isAcademicsOpen ? "active" : ""}`}
+              onClick={toggleAcademics}
+            >
+              Academics{" "}
+              <ChevronDown
+                size={16}
+                style={{
+                  transform: isAcademicsOpen ? "rotate(180deg)" : "rotate(0deg)",
+                  transition: "0.2s",
+                }}
+              />
             </button>
             <AnimatePresence>
-              {isProductOpen && (
-                <motion.div className="dropdown-menu" initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 15 }}>
-                  {/* UPDATE ALL PRODUCT LINKS TO /coming-soon */}
-                  <Link to="/coming-soon" className="dropdown-item" onClick={() => setProductOpen(false)}>Solo for Residents</Link>
-                  <Link to="/coming-soon" className="dropdown-item" onClick={() => setProductOpen(false)}>Solo for Managers</Link>
-                  <Link to="/coming-soon" className="dropdown-item" onClick={() => setProductOpen(false)}>Solo for Security</Link>
-                  <Link to="/coming-soon" className="dropdown-item" onClick={() => setProductOpen(false)}>Marketplace</Link>
-                  <Link to="/coming-soon" className="dropdown-item" onClick={() => setProductOpen(false)}>Smart Meters</Link>
+              {isAcademicsOpen && (
+                <motion.div
+                  className="dropdown-menu"
+                  initial={{ opacity: 0, y: 15 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: 15 }}
+                >
+                  <Link
+                    to="/academics#nursery"
+                    className="dropdown-item"
+                    onClick={() => setAcademicsOpen(false)}
+                  >
+                    Nursery School
+                  </Link>
+                  <Link
+                    to="/academics#primary"
+                    className="dropdown-item"
+                    onClick={() => setAcademicsOpen(false)}
+                  >
+                    Primary School
+                  </Link>
+                  <Link
+                    to="/academics#secondary"
+                    className="dropdown-item"
+                    onClick={() => setAcademicsOpen(false)}
+                  >
+                    Secondary School
+                  </Link>
                 </motion.div>
               )}
             </AnimatePresence>
           </div>
 
-          {/* UPDATE BLOG LINK TO /coming-soon */}
-          <Link to="/coming-soon" className="nav-link">Blog</Link>
-          <Link to="/contact" className="nav-link">Contact Us</Link>
-          <Link to="/about" className="nav-link">About Us</Link>
+          <Link to="/contact" className="nav-link">
+            Contact
+          </Link>
+
+          <Link to="/student-portal" className="nav-link">
+            Student Portal
+          </Link>
         </div>
 
+        {/* Right actions */}
         <div className="nav-actions">
-          <button className="nav-link"><Globe size={18} /> EN</button>
-          <Link to="/contact">
-            <button className="btn-primary" style={{padding: '10px 24px', fontSize: '14px', color: '#0d6efd'}}>Get Started</button>
+          <button className="nav-link lang-pill">
+            <Globe size={18} /> EN
+          </button>
+          <Link to="/admissions">
+            <button className="btn-primary">Apply for Admission</button>
           </Link>
         </div>
 
         {/* Mobile Toggle */}
-        <button className="mobile-toggle" onClick={() => setMobileMenuOpen(!isMobileMenuOpen)}>
+        <button
+          className="mobile-toggle"
+          onClick={() => setMobileMenuOpen((prev) => !prev)}
+        >
           {isMobileMenuOpen ? <X size={32} /> : <Menu size={32} />}
         </button>
 
-        {/* Mobile Menu Overlay */}
+        {/* Mobile Menu */}
         <AnimatePresence>
           {isMobileMenuOpen && (
-            <motion.div 
-              className="mobile-menu" 
-              initial={{ height: 0, opacity: 0 }} 
-              animate={{ height: "auto", opacity: 1 }} 
+            <motion.div
+              className="mobile-menu"
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: "auto", opacity: 1 }}
               exit={{ height: 0, opacity: 0 }}
             >
-              
-              <button 
-                className="mobile-link" 
-                onClick={toggleProducts} 
-                style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%'}}
+              <Link to="/" className="mobile-link" onClick={closeMenu}>
+                Home
+              </Link>
+
+              <Link
+                to="/about"
+                className="mobile-link"
+                onClick={closeMenu}
               >
-                Products 
-                <ChevronDown size={18} style={{transform: isProductOpen ? 'rotate(180deg)' : 'rotate(0deg)', transition: '0.2s'}}/>
+                About
+              </Link>
+
+              <Link
+                to="/admissions"
+                className="mobile-link"
+                onClick={closeMenu}
+              >
+                Admissions
+              </Link>
+
+              <button
+                className="mobile-link"
+                onClick={toggleAcademics}
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                  width: "100%",
+                }}
+              >
+                Academics
+                <ChevronDown
+                  size={18}
+                  style={{
+                    transform: isAcademicsOpen ? "rotate(180deg)" : "rotate(0deg)",
+                    transition: "0.2s",
+                  }}
+                />
               </button>
 
               <AnimatePresence>
-                {isProductOpen && (
+                {isAcademicsOpen && (
                   <motion.div
                     initial={{ height: 0, opacity: 0 }}
                     animate={{ height: "auto", opacity: 1 }}
                     exit={{ height: 0, opacity: 0 }}
-                    style={{overflow: 'hidden', display: 'flex', flexDirection: 'column'}}
+                    style={{
+                      overflow: "hidden",
+                      display: "flex",
+                      flexDirection: "column",
+                    }}
                   >
-                    {/* UPDATE MOBILE PRODUCT LINKS */}
-                    <Link to="/coming-soon" className="mobile-sub-link" onClick={closeMenu}>Solo for Residents</Link>
-                    <Link to="/coming-soon" className="mobile-sub-link" onClick={closeMenu}>Solo for Managers</Link>
-                    <Link to="/coming-soon" className="mobile-sub-link" onClick={closeMenu}>Solo for Security</Link>
-                    <Link to="/coming-soon" className="mobile-sub-link" onClick={closeMenu}>Marketplace</Link>
-                    <Link to="/coming-soon" className="mobile-sub-link" onClick={closeMenu}>Smart Meters</Link>
+                    <Link
+                      to="/academics#nursery"
+                      className="mobile-sub-link"
+                      onClick={closeMenu}
+                    >
+                      Nursery School
+                    </Link>
+                    <Link
+                      to="/academics#primary"
+                      className="mobile-sub-link"
+                      onClick={closeMenu}
+                    >
+                      Primary School
+                    </Link>
+                    <Link
+                      to="/academics#secondary"
+                      className="mobile-sub-link"
+                      onClick={closeMenu}
+                    >
+                      Secondary School
+                    </Link>
                   </motion.div>
                 )}
               </AnimatePresence>
 
-              <Link to="/" className="mobile-link" onClick={closeMenu}>Home</Link>
-              <Link to="/coming-soon" className="mobile-link" onClick={closeMenu}>Blog</Link> {/* UPDATED */}
-              <Link to="/about" className="mobile-link" onClick={closeMenu}>About Us</Link>
-              <Link to="/contact" className="mobile-link" onClick={closeMenu}>Contact Us</Link>
-              
-              <Link to="/contact" onClick={closeMenu} style={{width: '100%'}}>
-                <button className="btn-primary" style={{marginTop: '20px', width: '100%'}}>Get Started</button>
+              <Link
+                to="/contact"
+                className="mobile-link"
+                onClick={closeMenu}
+              >
+                Contact
+              </Link>
+
+              <Link
+                to="/student-portal"
+                className="mobile-link"
+                onClick={closeMenu}
+              >
+                Student Portal
+              </Link>
+
+              <Link to="/admissions" onClick={closeMenu} style={{ width: "100%" }}>
+                <button className="btn-primary mobile-cta-btn">
+                  Apply for Admission
+                </button>
               </Link>
             </motion.div>
           )}
         </AnimatePresence>
       </nav>
 
-      {/* --- ROUTING CONTENT --- */}
+      {/* ROUTES */}
       <main>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/contact" element={<Contact />} />
           <Route path="/about" element={<About />} />
-          <Route path="/coming-soon" element={<ComingSoon />} /> {/* <--- 2. ROUTE ADDED */}
+          <Route path="/admissions" element={<Admissions />} />
+          <Route path="/academics" element={<Academics />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/student-portal" element={<StudentPortal />} />
+          <Route path="/coming-soon" element={<ComingSoon />} />
         </Routes>
       </main>
 
-      {/* --- SHARED FOOTER --- */}
+      {/* FOOTER */}
       <footer className="footer">
         <div className="footer-content">
           <div className="footer-top">
             <div className="logo-area-footer">
-              <Link to="/" onClick={() => window.scrollTo(0,0)}>
-                <img src={logo} alt="Solo Equations" className="logo-img" style={{filter: 'brightness(0) invert(1)'}} />
+              <Link to="/" onClick={() => window.scrollTo(0, 0)}>
+                <img
+                  src={logo}
+                  alt="Afkar Schools"
+                  className="logo-img footer-logo-img"
+                  style={{ filter: "brightness(0) invert(1)" }}
+                />
               </Link>
-              <span>Simplifying Living Experiences</span>
+              <span>Inspiring excellence in knowledge and faith.</span>
             </div>
             <div className="newsletter-box">
-              <p>Subscribe to our newsletter</p>
+              <p>Stay informed about admissions and school news.</p>
               <div className="input-group">
-                <input type="email" placeholder="What's your email?" />
+                <input type="email" placeholder="Enter your email" />
                 <button>Subscribe</button>
               </div>
             </div>
           </div>
-          <div className="footer-divider"></div>
+
+          <div className="footer-divider" />
+
           <div className="footer-grid">
             <div className="footer-col">
-              <h4>Download our app</h4>
-              <div className="app-buttons">
-                <button className="app-btn">
-                  <Apple size={24} fill="white" />
-                  <div className="app-btn-text"><span>Download on the</span><strong>App Store</strong></div>
-                </button>
-                <button className="app-btn">
-                  <Play size={24} fill="white" />
-                  <div className="app-btn-text"><span>GET IT ON</span><strong>Google Play</strong></div>
-                </button>
+              <h4>School</h4>
+              <Link to="/about">About Afkar Schools</Link>
+              <Link to="/admissions">Admissions</Link>
+              <Link to="/academics">Academics</Link>
+              <Link to="/contact">Contact</Link>
+            </div>
+            <div className="footer-col">
+              <h4>Explore</h4>
+              <Link to="/coming-soon">News & Events</Link>
+              <Link to="/coming-soon">Calendar</Link>
+              <Link to="/coming-soon">Careers</Link>
+              <Link to="/student-portal">Student Portal</Link>
+            </div>
+            <div className="footer-col footer-col-contact">
+              <h4>Contact</h4>
+              <div className="footer-contact-item">
+                <MapPin size={18} />
+                <span>
+                  UMARU MUSA YAR&apos;ADUA WAY, Adjacent New Government House,
+                  Modoji, Katsina, Katsina State, Nigeria.
+                </span>
+              </div>
+              <div className="footer-contact-item">
+                <Phone size={16} />
+                <a href="tel:+2348012345678">+234 801 234 5678</a>
+              </div>
+              <div className="footer-contact-item">
+                <Mail size={16} />
+                <a href="mailto:contact@afkar.edu.ng">contact@afkar.edu.ng</a>
               </div>
             </div>
-            <div className="footer-col">
-              <h4>Company</h4>
-              <Link to="/about">About</Link>
-              <Link to="/about">FAQs</Link>
-              <Link to="/contact">Contact Us</Link>
-              <Link to="/about">Referral Program</Link>
-              <Link to="/privacy">Privacy Policy</Link>
-              <Link to="/about">Terms of Service</Link>
-            </div>
-            <div className="footer-col">
-              <h4>Products</h4>
-              {/* UPDATE FOOTER PRODUCT LINKS */}
-              <Link to="/coming-soon">Solo for Residents</Link>
-              <Link to="/coming-soon">Solo for Facility Managers</Link>
-              <Link to="/coming-soon">Solo for Security</Link>
-              <Link to="/coming-soon">Solo for Marketplace</Link>
-              <Link to="/coming-soon">Smart Meters</Link>
-            </div>
-            <div className="footer-col">
-              <h4>Follow Us</h4>
+            <div className="footer-col footer-col-affiliate">
+              <h4>Community</h4>
+              <div className="footer-contact-item">
+                <Users size={14} />
+                <span>Parents, students, and alumni network.</span>
+              </div>
               <div className="social-icons">
-                <a href="#"><Facebook size={20} /></a>
-                <a href="#"><Twitter size={20} /></a>
-                <a href="#"><Instagram size={20} /></a>
-                <a href="#"><Linkedin size={20} /></a>
+                <a
+                  href="https://web.facebook.com/afkarschool/?_rdc=1&_rdr#"
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label="FaceBook"
+                >
+                  <Facebook size={16} />
+                </a>
+                <a
+                  href="https://x.com/afkarschools"
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label="X (Twitter)"
+                >
+                  <Twitter size={16} />
+                </a>
+                <a
+                  href="https://www.instagram.com/afkarschools/?hl=en"
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label="Instagram"
+                >
+                  <Instagram size={16} />
+                </a>
+                <a
+                  href="#"
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label="LinkedIn"
+                >
+                  <Linkedin size={16} />
+                </a>
               </div>
             </div>
           </div>
+
           <div className="footer-bottom">
-            <p>&copy; 2025 Solo Equations. All rights reserved.</p>
+            <p>© {new Date().getFullYear()} Afkar Schools. All Rights Reserved.</p>
           </div>
         </div>
       </footer>
 
-      {/* --- FLOATING CHATBOT --- */}
-      <Chatbot /> 
-
+      {/* FLOATING CHATBOT */}
+      <Chatbot />
     </div>
   );
 }

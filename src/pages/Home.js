@@ -1,220 +1,539 @@
-import React, { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { 
-  PlayCircle, Users, Building2, ShieldCheck, Store, Zap,
-  MapPin, Home as HomeIcon, ArrowRight, Sparkles, // FIX: Renamed 'Home' to 'HomeIcon'
-  QrCode, CreditCard, ChevronLeft, ChevronRight 
+import React, { useState, useEffect, useRef } from "react";
+import { motion, useInView } from "framer-motion";
+import {
+  PlayCircle,
+  Users,
+  ShieldCheck,
+  MapPin,
+  BookOpen,
+  GraduationCap,
+  Sparkles,
+  ChevronLeft,
+  ChevronRight,
+  Quote,
+  Star,
+  ArrowRight,
 } from "lucide-react";
-import { Link } from "react-router-dom"; 
+import { Link } from "react-router-dom";
+import "./Home.css";
 
-// --- IMAGES ---
-import heroImage from "../assets/logo.png"; // Placeholder
-import visitorImg from "../assets/Visitor Management.png"; 
-import communityImg from "../assets/Community Management.png";
-import utilityImg from "../assets/Smart Utility Vending.png";
-import paymentImg from "../assets/Simplified Payments.png";
+import heroLogo from "../assets/Main Logo.png";
 
-const Home = () => {
-  // --- STATES ---
-  const [activeTab, setActiveTab] = useState("managers");
-  const [currentTestimonial, setCurrentTestimonial] = useState(0);
-  const [textIndex, setTextIndex] = useState(0);
+// Sample hero/backgrounds – replace with real Afkar photos later
+const sampleCampus =
+  "https://images.unsplash.com/photo-1588072432836-e10032774350?auto=format&fit=crop&w=1600&q=80";
+const sampleClassroom =
+  "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&w=1600&q=80";
+const sampleStudents =
+  "https://images.unsplash.com/photo-1523580846011-d3a5bc25702b?auto=format&fit=crop&w=1600&q=80";
 
-  const rotatingWords = [
-    "Apartment Blocks", "Office Buildings", "Residential Community", 
-    "Gated Street", "Neighborhood", "Commercial Center", 
-    "Shopping Complex", "Gated Community"
-  ];
+/* ---------- HOOKS ---------- */
 
-  // Images URLs
-  const heroImgUrl = "https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-4.0.3&auto=format&fit=crop&w=2426&q=80";
-  const solutionImgUrl = "https://images.unsplash.com/photo-1497366216548-37526070297c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1469&q=80";
+// multi-word typewriter for headline
+const useTypewriterWords = (words, typeSpeed = 120, deleteSpeed = 80, pause = 2000) => {
+  const [wordIndex, setWordIndex] = useState(0);
+  const [display, setDisplay] = useState("");
+  const [isDeleting, setIsDeleting] = useState(false);
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setTextIndex((prev) => (prev + 1) % rotatingWords.length);
-    }, 2500);
-    return () => clearInterval(interval);
-  }, []);
+    const currentWord = words[wordIndex];
+    let speed = isDeleting ? deleteSpeed : typeSpeed;
 
-  // --- DATA ---
-  const statsData = [
-    { icon: <MapPin size={32} />, number: "4 States", label: "Across Nigeria" },
-    { icon: <HomeIcon size={32} />, number: "1,000+", label: "Property Units" }, // FIX: Used HomeIcon here
-    { icon: <Users size={32} />, number: "5,000+", label: "Residents" },
-  ];
-
-  const tabData = {
-    managers: {
-      title: "Solo for Facility Managers",
-      desc: "Our all-in-one app for managing communities allows admins to configure bills and tariffs, automate collections and reconciliations, implement revenue assurance measures, communicate individually or generally with residents, track issues and generate tonnes of reports - all from your mobile phone.",
-      img: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1740&auto=format&fit=crop" 
-    },
-    residents: {
-      title: "Solo for Residents",
-      desc: "Pay bills easily, receive immediate value for payments, vend energy any time and from anywhere, book in visitors securely without stress, download electronic statements and utility bills; report and track issues right from the app.",
-      img: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=1740&auto=format&fit=crop" 
-    },
-    security: {
-      title: "Solo for Security",
-      desc: "Implement high-level security without breaking the bank with our code-based access, Virtual IDs and NFC-based digital cards and car-stickers. Already have physical access devices? Not to worry, Solo integrates with all popular electronic boom-barriers and turnstiles.",
-      img: "https://images.unsplash.com/photo-1555955207-b2f70497cc22?q=80&w=1740&auto=format&fit=crop" 
+    if (!isDeleting && display === currentWord) {
+      speed = pause;
     }
-  };
+    if (isDeleting && display === "") {
+      speed = 500;
+    }
 
-  const testimonials = [
-    { quote: "The Solo software is presently deployed across all our estates. It has been a true game changer as tasks are coordinated seamlessly, making the job of managing multiple estates quite easy and straightforward.", author: "Yinka", role: "Managing Director, Beachway Homes", logo: "https://images.unsplash.com/photo-1560179707-f14e90ef3623?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80" },
-    { quote: "Since switching to Solo, our revenue collection has improved by 40%. The automated billing system means we no longer have to chase residents for service charges. It's simply brilliant.", author: "Ahmed Musa", role: "Chairman, Lekki Gardens Phase 2", logo: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80" },
-    { quote: "Security was our biggest headache. With Solo's visitor management codes, we know exactly who is coming in and out. The residents love the convenience and the guards love the simplicity.", author: "Sarah O.", role: "Facility Manager, Victoria Crest", logo: "https://images.unsplash.com/photo-1554469384-e58fac16e23a?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80" }
-  ];
+    const timer = setTimeout(() => {
+      if (!isDeleting && display === currentWord) {
+        setIsDeleting(true);
+      } else if (isDeleting && display === "") {
+        setIsDeleting(false);
+        setWordIndex((prev) => (prev + 1) % words.length);
+      } else if (isDeleting) {
+        setDisplay((prev) => prev.slice(0, prev.length - 1));
+      } else {
+        setDisplay(currentWord.slice(0, display.length + 1));
+      }
+    }, speed);
 
-  const featuredLogos = [
-    { name: "TechCabal", url: "https://logo.clearbit.com/techcabal.com" },
-    { name: "Business Day", url: "https://logo.clearbit.com/businessday.ng" },
-    { name: "Disrupt Africa", url: "https://logo.clearbit.com/disrupt-africa.com" },
-    { name: "Techpoint", url: "https://logo.clearbit.com/techpoint.africa" }
-  ];
+    return () => clearTimeout(timer);
+  }, [display, isDeleting, wordIndex, words, typeSpeed, deleteSpeed, pause]);
 
-  const nextTestimonial = () => setCurrentTestimonial((prev) => (prev + 1) % testimonials.length);
-  const prevTestimonial = () => setCurrentTestimonial((prev) => (prev - 1 + testimonials.length) % testimonials.length);
+  return display;
+};
 
-  // Animation variants
-  const statsContainerVariant = { hidden: { opacity: 0 }, visible: { opacity: 1, transition: { staggerChildren: 0.2 } } };
-  const statItemVariant = { hidden: { opacity: 0, y: 50 }, visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } } };
-  const featureImageVariant = { hidden: { opacity: 0, scale: 0.95 }, visible: { opacity: 1, scale: 1, transition: { duration: 0.7, delay: 0.2 } } };
-  const featureTextVariant = { hidden: { opacity: 0, x: 50 }, visible: { opacity: 1, x: 0, transition: { duration: 0.7 } } };
+// single-text typewriter
+const useTypewriter = (text, speed = 35, inView = true) => {
+  const [index, setIndex] = useState(0);
+
+  useEffect(() => {
+    if (!inView) return;
+    if (index >= text.length) return;
+
+    const timer = setTimeout(() => setIndex((prev) => prev + 1), speed);
+    return () => clearTimeout(timer);
+  }, [index, text, speed, inView]);
+
+  useEffect(() => {
+    if (inView) setIndex(0);
+  }, [inView]);
+
+  return text.slice(0, index);
+};
+
+// count-up that restarts when inViewKey changes
+const CountUp = ({ end, duration = 4000, inViewKey }) => {
+  const [value, setValue] = useState(0);
+
+  useEffect(() => {
+    if (!inViewKey) return;
+
+    setValue(0);
+    let frame = 0;
+    const frameDuration = 1000 / 60;
+    const totalFrames = Math.round(duration / frameDuration);
+    const easeOutQuad = (t) => t * (2 - t);
+
+    const counter = setInterval(() => {
+      frame += 1;
+      const progress = easeOutQuad(frame / totalFrames);
+      const current = Math.round(end * progress);
+      setValue(current);
+      if (frame === totalFrames) clearInterval(counter);
+    }, frameDuration);
+
+    return () => clearInterval(counter);
+  }, [end, duration, inViewKey]);
+
+  return <span>{value.toLocaleString()}</span>;
+};
+
+/* ---------- SMALL COMPONENTS ---------- */
+
+const TestimonialCard = ({ item, inView }) => {
+  const typedText = useTypewriter(item.text, 25, inView);
 
   return (
-    <div className="home-page">
+    <div className="le-test-card">
+      <Quote className="le-test-quote-icon" size={26} />
+      <p className="le-test-text">
+        “{typedText}
+        <span className="typing-cursor light">|</span>”
+      </p>
+      <div className="le-test-rating">
+        {Array.from({ length: 5 }).map((_, i) => (
+          <Star
+            key={i}
+            size={18}
+            className={i < item.rating ? "le-star filled" : "le-star empty"}
+          />
+        ))}
+      </div>
+      <div className="le-test-person">
+        <span className="le-test-name">{item.name}</span>
+        <span className="le-test-role">{item.role}</span>
+      </div>
+    </div>
+  );
+};
+
+/* ---------- MAIN COMPONENT ---------- */
+
+const Home = () => {
+  const [currentSlide, setCurrentSlide] = useState(0);
+
+  const rotatingHeadlines = [
+    "Curious Minds",
+    "Strong Character",
+    "Future Leaders",
+    "Faith‑Driven Learners",
+  ];
+
+  const heroTyped = useTypewriterWords(rotatingHeadlines, 120, 80, 2200);
+
+  const statsData = [
+    {
+      icon: <Users size={40} />,
+      number: 800,
+      suffix: "+",
+      label: "Students nurtured",
+    },
+    {
+      icon: <GraduationCap size={40} />,
+      number: 10,
+      suffix: "+",
+      label: "Years of excellence",
+    },
+    {
+      icon: <BookOpen size={40} />,
+      number: 3,
+      suffix: "",
+      label: "Schools: Nursery • Primary • Secondary",
+    },
+  ];
+
+  const slides = [
+    {
+      title: "A vibrant learning community",
+      text: "From Nursery to Secondary, Afkar Schools provides a continuous, supportive journey of learning and growth.",
+      img: sampleCampus,
+    },
+    {
+      title: "Classrooms that inspire curiosity",
+      text: "Engaging lessons, modern teaching tools, and dedicated teachers who bring out the best in every child.",
+      img: sampleClassroom,
+    },
+    {
+      title: "Anchored on knowledge and faith",
+      text: "Strong academics blended with moral and faith‑based values for balanced character development.",
+      img: sampleStudents,
+    },
+  ];
+
+  const testimonials = [
+    {
+      name: "Mrs. Amina Yusuf",
+      role: "Parent, Primary Section",
+      text: "Afkar Schools has given my children confidence in both their studies and their faith. The teachers know every child by name and truly care.",
+      rating: 5,
+    },
+    {
+      name: "Ibrahim, SS3",
+      role: "Student, Secondary School",
+      text: "Our teachers push us to aim higher, but they also listen. I feel prepared for university and life after school.",
+      rating: 5,
+    },
+    {
+      name: "Mr. & Mrs. Abdullahi",
+      role: "Parents, Nursery & Secondary",
+      text: "We wanted a school that combines discipline, Islamic values, and strong academics. Afkar has met and exceeded that hope for our family.",
+      rating: 5,
+    },
+  ];
+
+  const nextSlide = () =>
+    setCurrentSlide((p) => (p + 1) % slides.length);
+  const prevSlide = () =>
+    setCurrentSlide((p) => (p - 1 + slides.length) % slides.length);
+
+  const statsRef = useRef(null);
+  const statsInView = useInView(statsRef, { amount: 0.4 });
+
+  const testRef = useRef(null);
+  const testsInView = useInView(testRef, { amount: 0.3 });
+
+  return (
+    <div className="le-home">
       {/* HERO */}
-      <section className="hero">
-        <div className="background-blobs"><div className="blob blob-1"></div><div className="blob blob-2"></div></div>
-        <div className="hero-grid">
-          <motion.div className="hero-text-col" initial={{ opacity: 0, x: -50 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.8 }}>
-            <div className="hero-pre-title">Manage your</div>
-            <div className="anim-container"><AnimatePresence mode="wait"><motion.span key={textIndex} className="gradient-text" initial={{ y: 50, opacity: 0 }} animate={{ y: 0, opacity: 1 }} exit={{ y: -50, opacity: 0 }} transition={{ duration: 0.5, ease: "circOut" }}>{rotatingWords[textIndex]}</motion.span></AnimatePresence></div>
-            <div className="hero-subtitle">Easily and Efficiently</div>
-            <motion.p className="hero-desc" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.5 }}>We simplify living experiences across Africa with our all-in-one community management solution. Stop relying on spreadsheets and start automating today.</motion.p>
-            <div className="btn-group">
-                <Link to="/contact"><button className="btn-primary">Get Started</button></Link>
-                <button className="btn-demo"><PlayCircle size={20} /> Watch Demo</button>
+      <section className="le-hero">
+        <div className="le-hero-blobs">
+          <div className="le-blob le-blob-1" />
+          <div className="le-blob le-blob-2" />
+        </div>
+
+        <div className="le-hero-grid">
+          <motion.div
+            className="le-hero-text"
+            initial={{ opacity: 0, x: -40 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ amount: 0.4 }}
+            transition={{ duration: 0.7 }}
+          >
+            <div className="le-hero-pill">
+              <ShieldCheck size={22} />
+              <span>Faith‑driven learning in Katsina</span>
+            </div>
+
+            <h1 className="le-hero-title">
+              Nurturing{" "}
+              <span className="le-hero-gradient">
+                <span className="typing-text">
+                  {heroTyped}
+                  <span className="typing-cursor">|</span>
+                </span>
+              </span>{" "}
+              grounded in knowledge and faith.
+            </h1>
+
+            <p className="le-hero-sub">
+              Afkar Schools is a Nursery, Primary and Secondary institution in
+              Katsina that blends strong academics with moral and faith‑based
+              values, helping every child grow in character and excellence.
+            </p>
+
+            <div className="le-hero-actions">
+              <Link to="/admissions">
+                <button className="btn-primary">Apply for admission</button>
+              </Link>
+              <a
+                href="https://wa.me/2348012345678"
+                target="_blank"
+                rel="noreferrer"
+              >
+                <button className="le-hero-secondary">
+                  <PlayCircle size={22} />
+                  Talk to our team
+                </button>
+              </a>
+            </div>
+
+            <div className="le-hero-meta">
+              <div>
+                <span className="le-meta-label">Location</span>
+                <span className="le-meta-value">
+                  <MapPin size={14} /> Umaru Musa Yar&apos;adua Way, Modoji, Katsina
+                </span>
+              </div>
+              <div>
+                <span className="le-meta-label">School levels</span>
+                <span className="le-meta-value">
+                  Nursery • Primary • Secondary
+                </span>
+              </div>
             </div>
           </motion.div>
-          <motion.div className="hero-image-col" initial={{ opacity: 0, x: 50 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 1, delay: 0.2 }}>
-            <div className="image-card-wrapper"><img src={heroImgUrl} alt="Dashboard" className="hero-img-right" /><div className="floating-badge"><ShieldCheck size={20} color="#00ff88"/> <span>100% Secure</span></div></div>
+
+          <motion.div
+            className="le-hero-media"
+            initial={{ opacity: 0, x: 40 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ amount: 0.4 }}
+            transition={{ duration: 0.8, delay: 0.1 }}
+          >
+            <div className="le-hero-card">
+              <img src={heroLogo} alt="Afkar Schools" className="le-hero-logo" />
+              <img
+                src={slides[currentSlide].img}
+                alt={slides[currentSlide].title}
+                className="le-hero-mainimg"
+              />
+              <div className="le-hero-badge">
+                <GraduationCap size={18} />
+                <span>Knowledge and Faith</span>
+              </div>
+              <div className="le-hero-small-card">
+                <h4>{slides[currentSlide].title}</h4>
+                <p>{slides[currentSlide].text}</p>
+              </div>
+            </div>
           </motion.div>
         </div>
       </section>
 
       {/* STATS */}
-      <section className="stats-section">
-        <motion.div className="stats-grid" variants={statsContainerVariant} initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-100px" }}>
-          {statsData.map((stat, index) => (
-            <motion.div key={index} className="stat-item" variants={statItemVariant}>
-              <div className="stat-icon-circle">{stat.icon}</div>
-              <div className="stat-info"><h3>{stat.number}</h3><p>{stat.label}</p></div>
+      <section className="le-stats" ref={statsRef}>
+        <motion.div
+          className="le-stats-grid"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ amount: 0.3 }}
+          variants={{
+            hidden: { opacity: 0 },
+            visible: { opacity: 1, transition: { staggerChildren: 0.2 } },
+          }}
+        >
+          {statsData.map((item) => (
+            <motion.div
+              key={item.label}
+              className="le-stat-item"
+              variants={{
+                hidden: { opacity: 0, y: 40 },
+                visible: {
+                  opacity: 1,
+                  y: 0,
+                  transition: { duration: 0.6, ease: "easeOut" },
+                },
+              }}
+            >
+              <div className="le-stat-icon">{item.icon}</div>
+              <div>
+                <h3>
+                  <CountUp
+                    end={item.number}
+                    duration={3500}
+                    inViewKey={statsInView}
+                  />
+                  {item.suffix}
+                </h3>
+                <p>{item.label}</p>
+              </div>
             </motion.div>
           ))}
         </motion.div>
       </section>
 
-      {/* SOLUTION */}
-      <section className="solution-section">
-        <div className="solution-container">
-          <motion.div className="solution-text" initial={{ opacity: 0, x: -50 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.7 }}>
-            <h2>All-in-one Community Management Solution</h2>
-            <p>Solo Equations is an all-in-one community management solution for multi-unit residential and commercial communities. We provide best-in-class software for property managers, owners, and tenants in all types of communities.</p>
-            <Link to="/contact"><button className="btn-dark">Get Started <ArrowRight size={18} /></button></Link>
-          </motion.div>
-          <motion.div className="solution-image" initial={{ opacity: 0, x: 50 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.7 }}>
-            <div className="image-frame"><img src={solutionImgUrl} alt="Community Management" /></div>
-          </motion.div>
-        </div>
-      </section>
+      {/* WHY AFKAR */}
+      <section className="le-why">
+        <motion.div
+          className="le-section-header"
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ amount: 0.4 }}
+          transition={{ duration: 0.6 }}
+        >
+          <div className="le-section-pill">
+            <Sparkles size={18} />
+            Why families choose Afkar
+          </div>
+          <h2>Balanced education for mind, character and faith.</h2>
+          <p>
+            Afkar Schools provides a safe, structured environment where students
+            gain strong academic foundations while growing in discipline,
+            responsibility and spiritual values.
+          </p>
+        </motion.div>
 
-      {/* FEATURES INTRO */}
-      <section className="features-intro">
-        <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.8 }} className="features-content">
-          <div className="feature-badge"><Sparkles size={16} /> Discover our key features</div>
-          <h2>Simplifying Living Experiences Across Africa</h2>
-          <p>We elevate residential community management with our software! Simplifying operations and enhancing access to communal services for owners and occupants.</p>
-        </motion.div>
-      </section>
-
-      {/* 4 CORE FEATURES */}
-      <section id="visitor" className="feature-section layout-image-left">
-        <motion.div className="feature-image-col" initial="hidden" whileInView="visible" viewport={{ once: true }} variants={featureImageVariant}>
-            <div className="feature-icon-circle-large"><QrCode size={40} /></div>
-            <img src={visitorImg} alt="Visitor Management" className="feature-img" />
-        </motion.div>
-        <motion.div className="feature-text-col" initial="hidden" whileInView="visible" viewport={{ once: true }} variants={featureTextVariant}>
-            <div className="feature-number">01.</div><h3>Visitor Management</h3><p>Solo's system uses secure codes and virtual IDs from their apps for visitor management, along with integration for popular access control devices.</p><button className="btn-learn-more">Learn More <ArrowRight size={16} /></button>
-        </motion.div>
-      </section>
-
-      <section id="community" className="feature-section layout-text-left subtle-bg">
-        <motion.div className="feature-text-col" initial="hidden" whileInView="visible" viewport={{ once: true }} variants={{ hidden: { opacity: 0, x: -50 }, visible: { opacity: 1, x: 0, transition: { duration: 0.7 } } }}>
-            <div className="feature-number">02.</div><h3>Community Management</h3><p>Integrated property database, issue reporting and management, amenities booking, financial reports as well as messaging and bulk communication tools are just a few of the tools Solo provides to Facilities Managers and Residents’ Associations.</p><button className="btn-learn-more">Learn More <ArrowRight size={16} /></button>
-        </motion.div>
-        <motion.div className="feature-image-col" initial="hidden" whileInView="visible" viewport={{ once: true }} variants={featureImageVariant}>
-            <div className="feature-icon-circle-large"><Users size={40} /></div>
-            <img src={communityImg} alt="Community Management" className="feature-img" />
-        </motion.div>
-      </section>
-
-      <section id="utility" className="feature-section layout-image-left">
-        <motion.div className="feature-image-col" initial="hidden" whileInView="visible" viewport={{ once: true }} variants={featureImageVariant}>
-            <div className="feature-icon-circle-large"><Zap size={40} /></div>
-            <img src={utilityImg} alt="Smart Utility Vending" className="feature-img" />
-        </motion.div>
-        <motion.div className="feature-text-col" initial="hidden" whileInView="visible" viewport={{ once: true }} variants={featureTextVariant}>
-            <div className="feature-number">03.</div><h3>Smart Utility Vending</h3><p>Solo simplifies community management for multi-unit properties, providing easy-to-use applications for property owners and occupants to access communal services.</p><button className="btn-learn-more">Learn More <ArrowRight size={16} /></button>
-        </motion.div>
-      </section>
-
-      <section id="payments" className="feature-section layout-text-left subtle-bg">
-        <motion.div className="feature-text-col" initial="hidden" whileInView="visible" viewport={{ once: true }} variants={{ hidden: { opacity: 0, x: -50 }, visible: { opacity: 1, x: 0, transition: { duration: 0.7 } } }}>
-            <div className="feature-number">04.</div><h3>Simplified Payments</h3><p>Automated billing, collections and reconciliation functionality on our apps means that late or no-payment of communal dues are a thing of the past. We’ve built in revenue assurance features that reduce defaults in payments.</p><button className="btn-learn-more">Learn More <ArrowRight size={16} /></button>
-        </motion.div>
-        <motion.div className="feature-image-col" initial="hidden" whileInView="visible" viewport={{ once: true }} variants={featureImageVariant}>
-            <div className="feature-icon-circle-large"><CreditCard size={40} /></div>
-            <img src={paymentImg} alt="Simplified Payments" className="feature-img" />
-        </motion.div>
-      </section>
-
-      {/* ECOSYSTEM */}
-      <section className="ecosystem-section">
-        <div className="tab-nav-container">
-          <div className="tab-nav">
-            <button className={`tab-btn ${activeTab === 'managers' ? 'active' : ''}`} onClick={() => setActiveTab('managers')}>For FMs</button>
-            <button className={`tab-btn ${activeTab === 'residents' ? 'active' : ''}`} onClick={() => setActiveTab('residents')}>For Residents</button>
-            <button className={`tab-btn ${activeTab === 'security' ? 'active' : ''}`} onClick={() => setActiveTab('security')}>For Security</button>
+        <div className="le-why-grid">
+          <div className="le-why-card">
+            <GraduationCap size={24} />
+            <h3>Strong academic foundation</h3>
+            <p>
+              A robust curriculum delivered by experienced teachers who focus on
+              literacy, numeracy and critical thinking at every stage.
+            </p>
+          </div>
+          <div className="le-why-card">
+            <ShieldCheck size={24} />
+            <h3>Faith & character</h3>
+            <p>
+              Daily routines that reinforce honesty, respect and faith‑based
+              values, helping students build sound character.
+            </p>
+          </div>
+          <div className="le-why-card">
+            <Users size={24} />
+            <h3>Personalised attention</h3>
+            <p>
+              Close teacher–student relationships and regular feedback so every
+              child is seen, supported and encouraged to thrive.
+            </p>
+          </div>
+          <div className="le-why-card">
+            <BookOpen size={24} />
+            <h3>Modern learning environment</h3>
+            <p>
+              Conducive classrooms and learning resources that make lessons
+              engaging, practical and relevant to today&apos;s world.
+            </p>
+          </div>
+          <div className="le-why-card">
+            <MapPin size={24} />
+            <h3>Accessible location</h3>
+            <p>
+              Strategically located along Umaru Musa Yar&apos;adua Way, easily
+              accessible for families across Katsina.
+            </p>
+          </div>
+          <div className="le-why-card">
+            <Sparkles size={24} />
+            <h3>Vibrant school life</h3>
+            <p>
+              Co‑curricular activities, clubs and events that help learners
+              discover talents, build confidence and make lasting friendships.
+            </p>
           </div>
         </div>
-        <div className="tab-content-wrapper">
-          <AnimatePresence mode="wait"><motion.div key={activeTab} className="tab-content-grid" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} transition={{ duration: 0.4 }}><div className="tab-text"><h3>{tabData[activeTab].title}</h3><p>{tabData[activeTab].desc}</p><button className="btn-learn-more">Learn More <ArrowRight size={16} /></button></div><div className="tab-image"><img src={tabData[activeTab].img} alt={tabData[activeTab].title} /></div></motion.div></AnimatePresence>
+      </section>
+
+      {/* HIGHLIGHTS / SLIDER */}
+      <section className="le-projects">
+        <div className="le-section-header le-projects-header">
+          <div className="le-section-pill">
+            <BookOpen size={18} />
+            School life highlights
+          </div>
+          <h2>A glimpse into everyday learning at Afkar.</h2>
+          <p>
+            From morning assembly to after‑school clubs, students experience a
+            structured, caring environment designed to help them grow.
+          </p>
+        </div>
+
+        <div className="le-projects-carousel">
+          <button className="le-proj-nav" onClick={prevSlide} aria-label="Previous">
+            <ChevronLeft size={20} />
+          </button>
+
+          <div className="le-project-card">
+            <div className="le-project-imgwrap">
+              <img src={slides[currentSlide].img} alt={slides[currentSlide].title} />
+              <div className="le-proj-tag">Campus highlight</div>
+            </div>
+            <div className="le-project-body">
+              <h3>{slides[currentSlide].title}</h3>
+              <p className="le-project-location">
+                <MapPin size={14} />
+                Afkar Schools • Modoji, Katsina
+              </p>
+              <p className="le-project-desc">{slides[currentSlide].text}</p>
+              <Link to="/about" className="le-proj-link">
+                Learn more about Afkar
+                <ArrowRight size={16} />
+              </Link>
+            </div>
+          </div>
+
+          <button className="le-proj-nav" onClick={nextSlide} aria-label="Next">
+            <ChevronRight size={20} />
+          </button>
         </div>
       </section>
 
       {/* TESTIMONIALS */}
-      <section className="testimonials-section">
-        <div className="features-content" style={{marginBottom: '50px'}}>
-          <div className="feature-badge"><Sparkles size={16} /> Customer Testimonials</div>
-          <h2>Hear what our clients have to say about Solo</h2>
-        </div>
-        <div className="testimonial-wrapper">
-          <button className="nav-btn prev" onClick={prevTestimonial}><ChevronLeft size={28} /></button>
-          <div className="testimonial-card">
-            <AnimatePresence mode="wait"><motion.div key={currentTestimonial} className="testimonial-content-inner" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} transition={{ duration: 0.3 }}><div className="testimonial-text"><p>"{testimonials[currentTestimonial].quote}"</p><div className="testimonial-author"><h4>{testimonials[currentTestimonial].author}</h4><span>{testimonials[currentTestimonial].role}</span></div></div><div className="testimonial-logo-area"><img src={testimonials[currentTestimonial].logo} alt="Client Logo" /></div></motion.div></AnimatePresence>
+      <section className="le-testimonials" ref={testRef}>
+        <motion.div
+          className="le-section-header le-test-header"
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ amount: 0.4 }}
+          transition={{ duration: 0.6 }}
+        >
+          <div className="le-section-pill">
+            <Sparkles size={18} />
+            Parent & student stories
           </div>
-          <button className="nav-btn next" onClick={nextTestimonial}><ChevronRight size={28} /></button>
-        </div>
+          <h2>What families say about Afkar Schools.</h2>
+          <p>
+            Hear from parents and students who experience our blend of
+            quality teaching, care and faith‑driven guidance every day.
+          </p>
+        </motion.div>
+
+        <motion.div
+          className="le-test-grid"
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ amount: 0.4 }}
+          transition={{ duration: 0.6, delay: 0.1 }}
+        >
+          {testimonials.map((item, idx) => (
+            <TestimonialCard key={idx} item={item} inView={testsInView} />
+          ))}
+        </motion.div>
       </section>
 
-      {/* FEATURED */}
-      <section className="featured-section">
-        <p className="featured-title">Also featured in</p>
-        <div className="featured-logos">{featuredLogos.map((logo, index) => (<img key={index} src={logo.url} alt={logo.name} className="partner-logo" title={logo.name} />))}</div>
+      {/* CTA STRIP */}
+      <section className="le-cta">
+        <div className="le-cta-inner">
+          <div>
+            <h2>Ready to enrol your child at Afkar?</h2>
+            <p>
+              Start the admission process online or reach out to our team for
+              guidance on placing your child in Nursery, Primary or Secondary.
+            </p>
+          </div>
+          <div className="le-cta-actions">
+            <Link to="/admissions">
+              <button className="btn-primary">Start admissions</button>
+            </Link>
+            <Link to="/contact">
+              <button className="le-cta-outline">Contact the school</button>
+            </Link>
+          </div>
+        </div>
       </section>
     </div>
   );
