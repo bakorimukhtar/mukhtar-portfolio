@@ -1,441 +1,212 @@
-/* --- ABOUT PAGE STYLES (AFKAR) --- */
+/* ABOUT PAGE */
 
 .about-page {
-  padding-top: 90px; /* space for navbar */
-  background: #ffffff;
-  overflow-x: hidden;
+  position: relative;
+  z-index: 1;
 }
 
-/* Header / hero */
+/* HERO */
 
-.about-header-section {
-  text-align: center;
-  padding: 80px 5% 100px;
-  background: #f3fbf8;
+.about-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.4fr);
+  gap: 28px;
+  align-items: center;
+  margin-bottom: 26px;
 }
 
-.about-header-content h1 {
-  font-size: clamp(36px, 5vw, 52px);
-  font-weight: 800;
-  color: #021024;
-  margin-bottom: 18px;
+/* PHOTO */
+
+.about-photo-wrap {
+  display: flex;
+  justify-content: center;
 }
 
-.about-header-content p {
-  font-size: 18px;
-  color: #64748b;
-  max-width: 620px;
-  margin: 0 auto 40px;
+.about-photo-card {
+  position: relative;
+  border-radius: 24px;
+  padding: 6px;
+  background: radial-gradient(
+    circle at 0 0,
+    rgba(56, 189, 248, 0.24),
+    rgba(15, 23, 42, 0.98)
+  );
+  border: 1px solid rgba(148, 163, 184, 0.7);
+  box-shadow: 0 22px 50px rgba(15, 23, 42, 0.95);
+  max-width: 260px;
 }
 
-.about-hero-image-wrapper {
-  max-width: 1100px;
-  margin: 0 auto;
-  border-radius: 20px;
-  overflow: hidden;
-  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.15);
-}
-
-.about-hero-img {
-  width: 100%;
-  height: auto;
+.about-photo {
   display: block;
-}
-
-/* Story & vision */
-
-.story-section {
-  padding: 100px 5%;
-  max-width: 1200px;
-  margin: 0 auto;
-}
-
-.story-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 60px;
-  align-items: center;
-}
-
-.section-pill {
-  background: rgba(0, 127, 95, 0.1);
-  color: #007f5f;
-  padding: 6px 16px;
-  border-radius: 50px;
-  font-weight: 600;
-  font-size: 13px;
-  text-transform: uppercase;
-  margin-bottom: 18px;
-  display: inline-block;
-}
-
-.story-text h2 {
-  font-size: 34px;
-  font-weight: 700;
-  color: #021024;
-  margin-bottom: 18px;
-  line-height: 1.2;
-}
-
-.story-text p {
-  font-size: 16px;
-  line-height: 1.7;
-  color: #4b5563;
-  margin-bottom: 14px;
-}
-
-.vision-cards {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-
-.vision-card {
-  background: #ffffff;
-  padding: 26px 24px;
-  border-radius: 16px;
-  border: 1px solid #e2e8f0;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03);
-}
-
-.vision-card.dark {
-  background: #007f5f;
-  color: #ffffff;
-  border: none;
-}
-
-.vision-card h3 {
-  margin: 0 0 8px 0;
-  font-size: 19px;
-}
-
-.vision-card p {
-  margin: 0;
-  font-size: 15px;
-  opacity: 0.9;
-  line-height: 1.5;
-}
-
-/* --- Impact / stats (Afkar, dark cards like screenshot) --- */
-
-.impact-section {
-  background: #007f5f;
-  color: #ffffff;
-  padding: 90px 5%;
-  text-align: center;
-}
-
-.impact-content h2 {
-  font-size: 32px;
-  margin-bottom: 16px;
-}
-
-.impact-desc {
-  max-width: 780px;
-  margin: 0 auto 40px;
-  font-size: 15px;
-  opacity: 0.82;
-  line-height: 1.5;
-  color: #cbd5f5;
-}
-
-.impact-stats-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 26px;
-  max-width: 960px;
-  margin: 0 auto;
-}
-
-.impact-stat-item {
-  background: #020617;
-  padding: 32px 20px;
-  border-radius: 18px;
-  border: 1px solid rgba(148, 163, 184, 0.35);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 20px 40px rgba(15, 23, 42, 0.45);
-}
-
-.impact-stat-item:hover {
-  border-color: #22c55e;
-  box-shadow: 0 24px 60px rgba(15, 23, 42, 0.7);
-}
-
-.impact-icon-circle {
-  width: 64px;
-  height: 64px;
-  border-radius: 999px;
-  background: #22c55e;
-  color: #020617;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 0 auto 18px;
-  box-shadow: 0 0 18px rgba(34, 197, 94, 0.45);
-}
-
-.impact-stat-item h3 {
-  font-size: 24px;
-  margin: 0 0 6px 0;
-  font-weight: 700;
-  color: #f9fafb;
-}
-
-.impact-stat-item h3 span {
-  font-size: 18px;
-  margin-left: 4px;
-}
-
-.impact-stat-item p {
-  font-size: 12px;
-  text-transform: none;
-  letter-spacing: 0.02em;
-  opacity: 0.78;
-  margin: 0;
-  color: #9ca3af;
-}
-
-/* mobile layout for cards */
-
-@media (max-width: 992px) {
-  .impact-stats-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-@media (max-width: 768px) {
-  .impact-stats-grid {
-    grid-template-columns: 1fr;
-  }
-}
-
-/* Leadership section */
-
-.team-section {
-  padding: 90px 5%;
-  max-width: 1200px;
-  margin: 0 auto;
-}
-
-.team-header {
-  text-align: center;
-  margin-bottom: 48px;
-}
-
-.team-header h2 {
-  font-size: 32px;
-  color: #021024;
-  margin-bottom: 10px;
-}
-
-.team-header p {
-  color: #64748b;
-  font-size: 16px;
-}
-
-.team-grid {
-  display: grid;
-  gap: 24px;
-}
-
-.team-grid-2 {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-}
-
-.team-card {
-  background: #ffffff;
-  border-radius: 18px;
-  border: 1px solid #e5e7eb;
-  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.05);
-  padding: 0 0 20px;
-  overflow: hidden;
-}
-
-.team-photo-wrapper {
   width: 100%;
-  height: 210px;
-  overflow: hidden;
-}
-
-.team-photo {
-  width: 100%;
-  height: 100%;
+  border-radius: 18px;
   object-fit: cover;
 }
 
-.team-info {
-  padding: 22px 22px 18px;
+.about-photo-glow {
+  position: absolute;
+  inset: 0;
+  border-radius: 24px;
+  pointer-events: none;
+  background: radial-gradient(
+    circle at 20% 0,
+    rgba(56, 189, 248, 0.25),
+    transparent 55%
+  );
+  mix-blend-mode: screen;
 }
 
-.team-info h3 {
-  margin: 0 0 4px 0;
-  font-size: 20px;
-  color: #021024;
+/* TEXT */
+
+.about-content {
+  max-width: 640px;
 }
 
-.team-role {
-  color: #007f5f;
-  font-weight: 600;
+.about-title {
+  margin: 0 0 10px;
+  font-size: clamp(26px, 3vw, 32px);
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  color: #f9fafb;
+}
+
+.about-title-gradient {
+  background: linear-gradient(120deg, #38bdf8, #6366f1, #a855f7);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.about-lead {
+  margin: 0 0 14px;
   font-size: 14px;
-  display: block;
-  margin-bottom: 12px;
+  color: #cbd5f5;
 }
 
-.team-info p {
-  color: #4b5563;
-  font-size: 15px;
-  line-height: 1.6;
-  margin-bottom: 16px;
-}
-
-.team-contact {
+.about-meta {
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
+  margin-bottom: 14px;
 }
 
-.team-contact a {
+.about-meta-item {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  font-size: 14px;
-  color: #007f5f;
-  text-decoration: none;
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: rgba(15, 23, 42, 0.9);
+  border: 1px solid rgba(148, 163, 184, 0.6);
+  font-size: 11px;
+  color: #e5e7eb;
 }
 
-.team-contact a svg {
-  flex-shrink: 0;
+.about-meta-item svg {
+  font-size: 12px;
+  color: #38bdf8;
 }
 
-.team-contact a:hover {
-  color: #00523c;
+.about-body p {
+  margin: 0 0 8px;
+  font-size: 13px;
+  line-height: 1.7;
+  color: #e5e7eb;
 }
 
-/* FAQ section */
-
-.faq-section {
-  padding: 80px 5% 100px;
-  background: #f3fbf8;
-}
-
-.faq-container {
-  max-width: 800px;
-  margin: 0 auto;
-}
-
-.faq-header {
-  text-align: center;
-  margin-bottom: 36px;
-}
-
-.faq-header h2 {
-  font-size: 30px;
-  margin-bottom: 8px;
-  color: #021024;
-}
-
-.faq-header p {
-  font-size: 16px;
-  color: #64748b;
-}
-
-.faq-list {
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-}
-
-.faq-item {
-  background: #ffffff;
-  border: 1px solid #e2e8f0;
-  border-radius: 12px;
-  padding: 16px 18px;
-  cursor: pointer;
-  transition: border-color 0.2s, box-shadow 0.2s;
-}
-
-.faq-item.open {
-  border-color: #007f5f;
-  box-shadow: 0 10px 25px rgba(15, 23, 42, 0.06);
-}
-
-.faq-question {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 16px;
-}
-
-.faq-question h4 {
-  margin: 0;
-  font-size: 16px;
-  color: #111827;
-}
-
-.faq-answer {
-  overflow: hidden;
-  color: #4b5563;
-  font-size: 15px;
-  line-height: 1.6;
+.about-cta-row {
   margin-top: 8px;
 }
 
-.faq-footer {
-  text-align: center;
-  margin-top: 32px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  font-size: 15px;
-}
-
-.faq-cta-link {
-  color: #007f5f;
-  font-weight: 700;
-  text-decoration: none;
+.about-cta {
   display: inline-flex;
   align-items: center;
-  gap: 5px;
+  gap: 6px;
+  padding: 7px 14px;
+  border-radius: 999px;
+  border: 1px solid rgba(59, 130, 246, 0.9);
+  background: rgba(15, 23, 42, 0.96);
+  color: #dbeafe;
+  font-size: 12px;
+  text-decoration: none;
+  transition: all 0.16s ease;
 }
 
-.faq-cta-link:hover {
-  color: #00523c;
+.about-cta:hover {
+  background: rgba(37, 99, 235, 0.9);
+  color: #f9fafb;
 }
 
-/* Responsiveness */
+/* GRID SECTION */
 
-@media (max-width: 992px) {
-  .story-grid {
-    grid-template-columns: 1fr;
+.about-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.about-card {
+  border-radius: 18px;
+  padding: 14px 14px 12px;
+  background: radial-gradient(
+    circle at 0 0,
+    rgba(129, 140, 248, 0.18),
+    rgba(15, 23, 42, 0.98)
+  );
+  border: 1px solid rgba(148, 163, 184, 0.6);
+}
+
+.about-card-title {
+  margin: 0 0 6px;
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #e5e7eb;
+}
+
+.about-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  font-size: 12px;
+  color: #e5e7eb;
+}
+
+.about-list li {
+  position: relative;
+  padding-left: 14px;
+  margin-bottom: 6px;
+}
+
+.about-list li::before {
+  content: "";
+  position: absolute;
+  left: 3px;
+  top: 7px;
+  width: 4px;
+  height: 4px;
+  border-radius: 999px;
+  background: #38bdf8;
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 960px) {
+  .about-hero {
+    grid-template-columns: minmax(0, 1fr);
   }
 
-  .team-grid-2 {
-    grid-template-columns: 1fr;
+  .about-photo-wrap {
+    justify-content: flex-start;
+  }
+
+  .about-grid {
+    grid-template-columns: minmax(0, 1fr);
   }
 }
 
-@media (max-width: 768px) {
-  .about-header-section {
-    padding: 70px 5% 80px;
-  }
-
-  .story-section {
-    padding: 70px 5%;
-  }
-
-  .impact-section {
-    padding: 70px 5%;
-  }
-
-  .team-section {
-    padding: 70px 5%;
-  }
-
-  .faq-section {
-    padding: 70px 5% 80px;
+@media (max-width: 640px) {
+  .about-photo-card {
+    max-width: 220px;
   }
 }

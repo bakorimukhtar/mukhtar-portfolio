@@ -1,271 +1,283 @@
 import React, { useState } from "react";
+import { motion } from "framer-motion";
+import { Mail, Phone, MapPin, Send, X } from "lucide-react";
 import "./Contact.css";
-import { motion, AnimatePresence } from "framer-motion";
-import { Mail, Phone, MapPin, CheckCircle, X, HelpCircle } from "lucide-react";
 
-const Contact = () => {
-  const [formData, setFormData] = useState({
-    fullName: "",
+const container = {
+  hidden: { opacity: 0 },
+  show: {
+    opacity: 1,
+    transition: { delayChildren: 0.08, staggerChildren: 0.08 },
+  },
+};
+
+const item = {
+  hidden: { opacity: 0, y: 18 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.45, ease: "easeOut" } },
+};
+
+function Contact() {
+  const [loading, setLoading] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [modalError, setModalError] = useState("");
+  const [formValues, setFormValues] = useState({
+    name: "",
     email: "",
-    phone: "",
-    childName: "",
-    purpose: "admissions",
+    subject: "",
     message: "",
   });
 
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [showModal, setShowModal] = useState(false);
-
   const handleChange = (e) => {
-    setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+    setFormValues((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setIsSubmitting(true);
+    setLoading(true);
+    setModalError("");
 
-    setTimeout(() => {
-      console.log("Afkar contact form submitted:", formData);
-      setIsSubmitting(false);
-      setShowModal(true);
-      // optional reset:
-      // setFormData({ fullName: "", email: "", phone: "", childName: "", purpose: "admissions", message: "" });
-    }, 1200);
+    try {
+      const res = await fetch("https://formspree.io/f/xbdjnraj", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify({
+          name: formValues.name,
+          email: formValues.email,
+          subject: formValues.subject,
+          message: formValues.message,
+        }),
+      });
+
+      if (!res.ok) {
+        throw new Error("Request failed");
+      }
+
+      setLoading(false);
+      setModalOpen(true);
+      setFormValues({ name: "", email: "", subject: "", message: "" });
+    } catch (err) {
+      setLoading(false);
+      setModalError(
+        "Something went wrong. Please try again or email directly."
+      );
+      setModalOpen(true);
+    }
   };
-
-  const closeModal = () => setShowModal(false);
 
   return (
-    <motion.div
-      className="contact-page"
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0 }}
-      transition={{ duration: 0.5 }}
-    >
-      {/* HEADER */}
-      <header className="contact-header">
-        <h1>Contact Afkar Schools</h1>
-        <p>
-          Reach out to ask about admissions, academics, fees or any other
-          questions about our Nursery, Primary and Secondary schools.
-        </p>
-      </header>
+    <div className="contact-page">
+      {/* Background splashes + grid */}
+      <div className="contact-blob contact-blob--one" />
+      <div className="contact-blob contact-blob--two" />
+      <div className="contact-blob contact-blob--three" />
+      <div className="contact-grid-overlay" />
 
-      <div className="contact-container">
-        {/* LEFT: SCHOOL DETAILS */}
-        <section className="contact-info-box">
-          <h3>School contact details</h3>
-          <p className="info-desc">
-            Our office is open during school hours on weekdays. You can call,
-            send an email, or visit the campus in person.
+      {/* MODAL */}
+      {modalOpen && (
+        <div className="contact-modal-backdrop">
+          <motion.div
+            className="contact-modal"
+            initial={{ opacity: 0, scale: 0.9, y: 10 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            transition={{ duration: 0.25, ease: "easeOut" }}
+          >
+            <button
+              className="contact-modal-close"
+              onClick={() => setModalOpen(false)}
+              type="button"
+            >
+              <X size={16} />
+            </button>
+            {modalError ? (
+              <>
+                <h2>Something went wrong</h2>
+                <p>{modalError}</p>
+                <p>
+                  You can also reach Mukhtar directly at{" "}
+                  <a href="mailto:muntari.audullahi@outlook.com">
+                    muntari.audullahi@outlook.com
+                  </a>
+                  .
+                </p>
+              </>
+            ) : (
+              <>
+                <h2>Message received</h2>
+                <p>
+                  Mukhtar has received your message and will be in touch as soon
+                  as possible.
+                </p>
+                <p>
+                </p>
+              </>
+            )}
+          </motion.div>
+        </div>
+      )}
+
+      <motion.section
+        className="contact-hero"
+        variants={container}
+        initial="hidden"
+        animate="show"
+      >
+        {/* LEFT SIDE */}
+        <motion.div className="contact-copy" variants={item}>
+          <p className="eyebrow">Contact</p>
+
+          <h1 className="contact-title">
+            Let&apos;s ship{" "}
+            <span className="contact-rotating-wrap">
+              <span className="contact-rotating-static">your next&nbsp;</span>
+              <span className="contact-rotating-words">
+                <span>release</span>
+                <span>product</span>
+                <span>project</span>
+                <span>app</span>
+              </span>
+            </span>
+          </h1>
+
+          <p className="contact-subtitle">
+            Share a brief, a link, or just an idea. Mukhtar works best where
+            there&apos;s a real problem to solve: events, education systems, or
+            new products.
           </p>
 
-          <div className="info-item">
-            <div className="icon-box">
-              <Mail size={20} />
+          <div className="contact-highlight-row">
+            <div className="contact-highlight">
+              <span className="contact-pulse-dot" />
+              <span>Open for selective projects &amp; roles.</span>
             </div>
-            <div>
-              <span className="info-label">General enquiries</span>
-              <span>contact@afkar.edu.ng</span>
-            </div>
-          </div>
-
-          <div className="info-item">
-            <div className="icon-box">
-              <Mail size={20} />
-            </div>
-            <div>
-              <span className="info-label">Admissions</span>
-              <span>admission@afkar.edu.ng</span>
-            </div>
-          </div>
-
-          <div className="info-item">
-            <div className="icon-box">
-              <Phone size={20} />
-            </div>
-            <div>
-              <span className="info-label">Phone</span>
-              <span>+234 801 234 5678</span>
-            </div>
-          </div>
-
-          <div className="info-item">
-            <div className="icon-box">
-              <MapPin size={20} />
-            </div>
-            <div>
-              <span className="info-label">Address</span>
-              <span>
-                UMARU MUSA YAR&apos;ADUA WAY, Adjacent New Government House,
-                Modoji, Katsina, Katsina State, Nigeria.
-              </span>
-            </div>
-          </div>
-
-          <div className="info-note">
-            <HelpCircle size={18} />
-            <span>
-              For admission forms and entrance examinations, please visit the
-              school campus.
+            <span className="contact-highlight-note">
+              Replies usually within 24 hours.
             </span>
           </div>
-        </section>
+
+          <div className="contact-details">
+            <div className="contact-detail-item">
+              <Mail size={16} />
+              <a href="mailto:muntari.audullahi@outlook.com">
+                muntari.audullahi@outlook.com
+              </a>
+            </div>
+            <div className="contact-detail-item">
+              <Phone size={16} />
+              <a href="tel:+2347026842722">+234 702 684 2722</a>
+            </div>
+            <div className="contact-detail-item">
+              <MapPin size={16} />
+              <span>Katsina, Nigeria</span>
+            </div>
+          </div>
+        </motion.div>
 
         {/* RIGHT: FORM */}
-        <form className="contact-form" onSubmit={handleSubmit}>
-          <div className="form-group">
-            <label>Full name</label>
-            <input
-              type="text"
-              name="fullName"
-              placeholder="Your full name"
-              required
-              value={formData.fullName}
-              onChange={handleChange}
-            />
-          </div>
+        <motion.div
+          className="contact-form-shell"
+          variants={item}
+          whileHover={{ y: -3 }}
+          transition={{ type: "spring", stiffness: 200, damping: 20 }}
+        >
+          <div className="contact-form-orbit contact-form-orbit--one" />
+          <div className="contact-form-orbit contact-form-orbit--two" />
+          <div className="contact-form-orbit contact-form-orbit--three" />
 
-          <div className="form-grid-2">
-            <div className="form-group">
-              <label>Email address</label>
-              <input
-                type="email"
-                name="email"
-                placeholder="you@email.com"
-                required
-                value={formData.email}
-                onChange={handleChange}
-              />
-            </div>
-
-            <div className="form-group">
-              <label>Mobile number</label>
-              <input
-                type="tel"
-                name="phone"
-                placeholder="+234..."
-                required
-                value={formData.phone}
-                onChange={handleChange}
-              />
-            </div>
-          </div>
-
-          <div className="form-group">
-            <label>Child&apos;s name (optional)</label>
-            <input
-              type="text"
-              name="childName"
-              placeholder="Enter your child’s name"
-              value={formData.childName}
-              onChange={handleChange}
-            />
-          </div>
-
-          <div className="form-group radio-group">
-            <label>I&apos;m contacting the school about:</label>
-            <div className="radio-options">
-              <label
-                className={`radio-btn ${
-                  formData.purpose === "admissions" ? "active" : ""
-                }`}
-              >
-                <input
-                  type="radio"
-                  name="purpose"
-                  value="admissions"
-                  checked={formData.purpose === "admissions"}
-                  onChange={handleChange}
-                />
-                Admissions / enrolment
-              </label>
-              <label
-                className={`radio-btn ${
-                  formData.purpose === "academics" ? "active" : ""
-                }`}
-              >
-                <input
-                  type="radio"
-                  name="purpose"
-                  value="academics"
-                  checked={formData.purpose === "academics"}
-                  onChange={handleChange}
-                />
-                Academics / results
-              </label>
-              <label
-                className={`radio-btn ${
-                  formData.purpose === "other" ? "active" : ""
-                }`}
-              >
-                <input
-                  type="radio"
-                  name="purpose"
-                  value="other"
-                  checked={formData.purpose === "other"}
-                  onChange={handleChange}
-                />
-                Other enquiries
-              </label>
-            </div>
-          </div>
-
-          <div className="form-group">
-            <label>Message</label>
-            <textarea
-              name="message"
-              rows="4"
-              placeholder="Tell us how we can help you."
-              required
-              value={formData.message}
-              onChange={handleChange}
-            ></textarea>
-          </div>
-
-          <button type="submit" className="submit-btn" disabled={isSubmitting}>
-            {isSubmitting ? "Sending..." : "Send message"}
-          </button>
-        </form>
-      </div>
-
-      {/* SUCCESS MODAL */}
-      <AnimatePresence>
-        {showModal && (
           <motion.div
-            className="modal-overlay"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
+            className="contact-form-card"
+            initial={{ opacity: 0, scale: 0.96, y: 10 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            transition={{ duration: 0.45, ease: "easeOut" }}
           >
-            <motion.div
-              className="modal-card"
-              initial={{ scale: 0.86, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.86, opacity: 0 }}
-              transition={{ type: "spring", damping: 24, stiffness: 260 }}
-            >
-              <button className="close-modal-btn" onClick={closeModal}>
-                <X size={20} />
-              </button>
-              <div className="modal-icon">
-                <CheckCircle size={48} />
+            <form className="contact-form" onSubmit={handleSubmit}>
+              <div className="contact-form-header">
+                <span>Start with a short note</span>
+                <p>
+                  A few sentences about the problem, timeline, and how to reach
+                  you is enough to begin.
+                </p>
               </div>
-              <h2>Message received</h2>
-              <p>
-                Thank you for contacting Afkar Schools. A member of our team
-                will respond as soon as possible during office hours.
+
+              <div className="field-grid">
+                <div className="field-group">
+                  <label htmlFor="name">Full name</label>
+                  <input
+                    id="name"
+                    name="name"
+                    type="text"
+                    placeholder="Your name"
+                    value={formValues.name}
+                    onChange={handleChange}
+                    required
+                  />
+                </div>
+
+                <div className="field-group">
+                  <label htmlFor="email">Email</label>
+                  <input
+                    id="email"
+                    name="email"
+                    type="email"
+                    placeholder="you@example.com"
+                    value={formValues.email}
+                    onChange={handleChange}
+                    required
+                  />
+                </div>
+              </div>
+
+              <div className="field-group">
+                <label htmlFor="subject">What are you thinking about?</label>
+                <input
+                  id="subject"
+                  name="subject"
+                  type="text"
+                  placeholder="Event platform, school system, internship, or something else"
+                  value={formValues.subject}
+                  onChange={handleChange}
+                />
+              </div>
+
+              <div className="field-group">
+                <label htmlFor="message">Message</label>
+                <textarea
+                  id="message"
+                  name="message"
+                  rows={4}
+                  placeholder="Share context, goals, and any useful links."
+                  value={formValues.message}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+
+              <motion.button
+                type="submit"
+                className="contact-submit"
+                whileHover={{ y: -2, scale: 1.02 }}
+                whileTap={{ scale: 0.97 }}
+                disabled={loading}
+              >
+                <Send size={16} />
+                <span>{loading ? "Sending..." : "Send message"}</span>
+              </motion.button>
+
+              <p className="contact-footnote">
+                Prefer email? Reach out directly at{" "}
+                <a href="mailto:muntari.audullahi@outlook.com">
+                  muntari.audullahi@outlook.com
+                </a>
+                .
               </p>
-              <button className="modal-action-btn" onClick={closeModal}>
-                Close
-              </button>
-            </motion.div>
+            </form>
           </motion.div>
-        )}
-      </AnimatePresence>
-    </motion.div>
+        </motion.div>
+      </motion.section>
+    </div>
   );
-};
+}
 
 export default Contact;

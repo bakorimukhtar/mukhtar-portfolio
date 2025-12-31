@@ -7,6 +7,7 @@ import {
   Network,
   Sparkles,
   Award,
+  Cpu,
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import "./Home.css";
@@ -54,14 +55,16 @@ function Home() {
           </div>
 
           <h1 className="hero-title">
-            Building event &amp; school platforms{" "}
-            <span className="hero-gradient">that actually ship.</span>
+            Computer Science student &amp;{" "}
+            <span className="hero-gradient">
+              full‑stack builder for real products.
+            </span>
           </h1>
 
           <p className="hero-subtitle">
-            Mukhtar is a product‑driven full‑stack developer and Computer
-            Science student in Katsina, focused on event technology, school
-            systems, and AI‑powered experiences.
+            Mukhtar Abdullahi is a Computer Science student and full‑stack
+            developer from Katsina, leading Rijxa as CTO and building African‑
+            focused event, education, and AI‑powered web platforms.
           </p>
 
           <div className="hero-actions">
@@ -96,13 +99,13 @@ function Home() {
             <div className="hero-meta-item">
               <span className="hero-meta-label">Primary stack</span>
               <span className="hero-meta-value">
-                React • PHP • SQL • Python
+                HTML, CSS, JavaScript, React, PHP, Python, SQL
               </span>
             </div>
             <div className="hero-meta-item">
-              <span className="hero-meta-label">Focus</span>
+              <span className="hero-meta-label">Focus areas</span>
               <span className="hero-meta-value">
-                Event tech • School systems • AI workflows
+                Event platforms • School systems • AI‑assisted workflows
               </span>
             </div>
           </motion.div>
@@ -125,15 +128,15 @@ function Home() {
                 <Code2 size={14} />
                 <span>Rijxa Platform</span>
               </div>
-              <span className="hero-card-status">Live</span>
+              <span className="hero-card-status">Founder &amp; CTO</span>
             </div>
             <p className="hero-card-title">End‑to‑end event management.</p>
             <p className="hero-card-body">
-              Ticketing, QR badges, real‑time check‑ins, analytics, and exports
-              for organizers across Africa.
+              Comprehensive event SaaS with ticketing, QR badges, real‑time
+              check‑ins, and dashboards for organizers across Africa.
             </p>
             <div className="hero-card-footer">
-              <span>Event tech • SaaS</span>
+              <span>Event tech • Full‑stack • Data</span>
             </div>
           </motion.div>
 
@@ -145,19 +148,19 @@ function Home() {
             <div className="hero-card-header">
               <div className="hero-card-pill">
                 <Network size={14} />
-                <span>Demo School Website</span>
+                <span>Education &amp; SIWES work</span>
               </div>
               <span className="hero-card-status hero-card-status--soft">
-                Multi‑page
+                School systems
               </span>
             </div>
-            <p className="hero-card-title">Student‑first school presence.</p>
+            <p className="hero-card-title">Real school infrastructure.</p>
             <p className="hero-card-body">
-              Multi‑page website with noticeboard, admissions, portals, and
-              staff sections tuned for real schools.
+              3‑month SIWES internship and demo school portals built with SQL
+              authentication, multi‑role access, and student‑first pages.
             </p>
             <div className="hero-card-footer">
-              <span>Education • Web</span>
+              <span>Education • Web platforms</span>
             </div>
           </motion.div>
 
@@ -177,12 +180,13 @@ function Home() {
             </div>
             <p className="hero-card-title">Lyrics &amp; metadata systems.</p>
             <p className="hero-card-body">
-              Verified multilingual lyrics with strict metadata and quality
-              control, powering real user experiences.
+              High‑volume lyric curation, Hausa Insights framework, and
+              catalog‑quality work powering Apple Music, Spotify, and global
+              streaming.
             </p>
             <div className="hero-card-footer hero-card-footer--row">
-              <span>Quality systems</span>
-              <span>AI‑ready data</span>
+              <span>Quality control</span>
+              <span>Multilingual data</span>
             </div>
           </motion.div>
         </motion.div>
@@ -197,15 +201,21 @@ function Home() {
           whileInView="show"
           viewport={{ once: true, amount: 0.3 }}
         >
-          <h2 className="home-panel-title">Technical focus</h2>
+          <div className="home-panel-header home-panel-header--tech">
+            <Cpu size={18} />
+            <h2 className="home-panel-title">Technical focus</h2>
+          </div>
           <p className="home-panel-body">
-            Beyond tutorials — Mukhtar ships real products with production
-            constraints: auth, portals, dashboards, and clean frontends.
+            Mukhtar works beyond tutorials, shipping production‑ready products
+            with auth, dashboards, portals, and clean interfaces optimized for
+            real users.
           </p>
           <div className="skills-grid">
             <div className="skill-pill">
               <span className="skill-label">Frontend</span>
-              <span className="skill-value">React, HTML, CSS, JS</span>
+              <span className="skill-value">
+                HTML, CSS, JavaScript, React
+              </span>
             </div>
             <div className="skill-pill">
               <span className="skill-label">Backend</span>
@@ -213,11 +223,27 @@ function Home() {
             </div>
             <div className="skill-pill">
               <span className="skill-label">Database</span>
-              <span className="skill-value">SQL auth &amp; integrations</span>
+              <span className="skill-value">
+                SQL authentication &amp; integration
+              </span>
+            </div>
+            <div className="skill-pill">
+              <span className="skill-label">AI workflow</span>
+              <span className="skill-value">
+                Prompt engineering, AI‑assisted dev, creative tooling
+              </span>
             </div>
             <div className="skill-pill">
               <span className="skill-label">Tools</span>
-              <span className="skill-value">Git, Office, AI tooling</span>
+              <span className="skill-value">
+                Git, Office, slides &amp; documentation
+              </span>
+            </div>
+            <div className="skill-pill">
+              <span className="skill-label">Other</span>
+              <span className="skill-value">
+                Transcription &amp; lyrics metadata curation
+              </span>
             </div>
           </div>
         </motion.div>
@@ -231,22 +257,28 @@ function Home() {
         >
           <div className="home-panel-header">
             <Award size={18} />
-            <h2 className="home-panel-title">What stands out</h2>
+            <h2 className="home-panel-title">Highlights &amp; impact</h2>
           </div>
           <ul className="home-list">
             <li>
-              Founder mindset from shipping Rijxa, not just cloning portfolios.
+              Founder mindset: building Rijxa from zero to a full event platform
+              with admin and organizer dashboards.
             </li>
             <li>
-              Real internship experience building school information systems and
-              SQL‑based auth flows.
+              Proven internship and community work through SIWES projects and
+              NACOS technical support at UMYU.
             </li>
             <li>
-              Strong documentation and UI/UX awareness for non‑technical
-              stakeholders.
+              Certified in Python, project management, sustainable tech, and
+              Generative AI, aligning engineering with business outcomes.
             </li>
             <li>
-              Proven specialist track at Musixmatch with multilingual workflows.
+              2+ years as Musixmatch Specialist, including Hausa Insights
+              guidance that improves Hausa lyric quality globally.
+            </li>
+            <li>
+              Active in ecosystem events like Founders Friday, supporting
+              registration flows and high‑volume attendee onboarding.
             </li>
           </ul>
           <Link to="/experience" className="home-link">

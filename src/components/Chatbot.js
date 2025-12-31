@@ -7,7 +7,6 @@ const Chatbot = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [message, setMessage] = useState("");
 
-  // Afkar WhatsApp number (change if needed)
   const supportNumber = "2347026842722";
 
   const toggleChat = () => {
@@ -18,11 +17,17 @@ const Chatbot = () => {
     e.preventDefault();
     if (!message.trim()) return;
 
+    const defaultIntro =
+      "Hi Mukhtar, I reached your portfolio and would like to talk about ";
+    const textToSend = message.trim().startsWith("Hi Mukhtar")
+      ? message
+      : `${defaultIntro}${message}`;
+
     const whatsappUrl = `https://wa.me/${supportNumber}?text=${encodeURIComponent(
-      message
+      textToSend
     )}`;
 
-    window.open(whatsappUrl, "_blank");
+    window.open(whatsappUrl, "_blank", "noopener,noreferrer");
     setMessage("");
   };
 
@@ -33,21 +38,25 @@ const Chatbot = () => {
         {isOpen && (
           <motion.div
             className="chat-window"
-            initial={{ opacity: 0, y: 20, scale: 0.95 }}
+            initial={{ opacity: 0, y: 18, scale: 0.96 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 20, scale: 0.95 }}
-            transition={{ duration: 0.2 }}
+            exit={{ opacity: 0, y: 18, scale: 0.96 }}
+            transition={{ duration: 0.2, ease: "easeOut" }}
           >
             <div className="chat-header">
               <div className="chat-header-info">
                 <div className="status-dot" />
                 <div>
-                  <h4>Afkar Support</h4>
-                  <span>Typically replies within a few minutes</span>
+                  <h4>Mukhtar • Portfolio chat</h4>
+                  <span>Typically replies within a day</span>
                 </div>
               </div>
-              <button onClick={toggleChat} className="close-chat-btn">
-                <X size={20} />
+              <button
+                onClick={toggleChat}
+                className="close-chat-btn"
+                type="button"
+              >
+                <X size={18} />
               </button>
             </div>
 
@@ -57,17 +66,43 @@ const Chatbot = () => {
                   <User size={16} />
                 </div>
                 <div className="msg-bubble">
-                  Assalamu alaikum 👋 <br />
-                  How can Afkar Schools assist you today with admissions,
-                  academics or general enquiries?
+                  Hello👋<br />
+                  You can send a quick WhatsApp message about projects,
+                  internships, or collaborations. Please include your name and a
+                  brief context.
                 </div>
+              </div>
+
+              <div className="preset-row">
+                <button
+                  type="button"
+                  className="preset-chip"
+                  onClick={() =>
+                    setMessage(
+                      "Hi Mukhtar, I’d like to discuss a potential project with you."
+                    )
+                  }
+                >
+                  Project enquiry
+                </button>
+                <button
+                  type="button"
+                  className="preset-chip"
+                  onClick={() =>
+                    setMessage(
+                      "Hi Mukhtar, I’m interested in talking about internship or role opportunities."
+                    )
+                  }
+                >
+                  Roles / internship
+                </button>
               </div>
             </div>
 
             <form className="chat-footer" onSubmit={handleSend}>
               <input
                 type="text"
-                placeholder="Type your message for Afkar Schools..."
+                placeholder="Type your message for Mukhtar..."
                 value={message}
                 onChange={(e) => setMessage(e.target.value)}
               />
@@ -83,11 +118,12 @@ const Chatbot = () => {
       <motion.button
         className={`chat-toggle-btn ${isOpen ? "open" : ""}`}
         onClick={toggleChat}
-        whileHover={{ scale: 1.1 }}
-        whileTap={{ scale: 0.9 }}
-        aria-label="Chat with Afkar Schools on WhatsApp"
+        whileHover={{ scale: 1.08 }}
+        whileTap={{ scale: 0.92 }}
+        aria-label="Chat with Mukhtar on WhatsApp"
+        type="button"
       >
-        {isOpen ? <X size={26} /> : <MessageCircle size={26} />}
+        {isOpen ? <X size={22} /> : <MessageCircle size={24} />}
       </motion.button>
     </div>
   );

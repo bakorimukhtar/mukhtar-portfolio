@@ -1,4 +1,4 @@
-// src/App.js
+// src/App.jsx
 import React, { useState, useEffect } from "react";
 import "./App.css";
 import { Routes, Route, Link, useLocation } from "react-router-dom";
@@ -16,7 +16,7 @@ import {
   Sparkles,
 } from "lucide-react";
 
-// --- IMPORT PAGES (you will implement these) ---
+// Pages
 import Home from "./pages/Home";
 import About from "./pages/About";
 import Projects from "./pages/Projects";
@@ -25,21 +25,28 @@ import Resume from "./pages/Resume";
 import Contact from "./pages/Contact";
 import Blog from "./pages/Blog";
 
-// --- IMPORT COMPONENTS ---
+// Components
 import Chatbot from "./components/Chatbot";
 
 function App() {
   const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
   const location = useLocation();
 
-  const closeMenu = () => {
-    setMobileMenuOpen(false);
-  };
+  const closeMenu = () => setMobileMenuOpen(false);
 
   useEffect(() => {
-    window.scrollTo(0, 0);
+    // Do not force scroll if the URL has a hash (e.g. #section)
+    if (window.location.hash) return;
+  
+    const id = requestAnimationFrame(() => {
+      window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+    });
+  
     setMobileMenuOpen(false);
-  }, [location]);
+  
+    return () => cancelAnimationFrame(id);
+  }, [location.pathname]);
+  
 
   const navLinks = [
     { to: "/", label: "Home" },
@@ -68,12 +75,12 @@ function App() {
           <div className="logo-text">
             <span className="logo-title">Mukhtar Abdullahi</span>
             <span className="logo-subtitle">
-              Founder & CTO — Rijxa • Full‑Stack
+              Founder &amp; CTO — Rijxa • Full‑Stack Developer
             </span>
           </div>
         </Link>
 
-        {/* Desktop Nav */}
+        {/* Desktop nav */}
         <div className="nav-center">
           {navLinks.map((item) => (
             <NavLinkItem key={item.to} to={item.to} label={item.label} />
@@ -82,27 +89,28 @@ function App() {
 
         {/* Right actions */}
         <div className="nav-actions">
-          <button className="nav-link lang-pill">
+          <button className="nav-link lang-pill" type="button">
             <Globe size={16} />
             EN
           </button>
           <Link to="/projects">
-            <button className="btn-primary">
+            <button className="btn-primary" type="button">
               <Sparkles size={16} />
-              View Work
+              View work
             </button>
           </Link>
         </div>
 
-        {/* Mobile Toggle */}
+        {/* Mobile toggle */}
         <button
           className="mobile-toggle"
           onClick={() => setMobileMenuOpen((prev) => !prev)}
+          type="button"
         >
-          {isMobileMenuOpen ? <X size={30} /> : <Menu size={30} />}
+          {isMobileMenuOpen ? <X size={26} /> : <Menu size={26} />}
         </button>
 
-        {/* Mobile Menu */}
+        {/* Mobile menu */}
         <AnimatePresence>
           {isMobileMenuOpen && (
             <motion.div
@@ -123,7 +131,7 @@ function App() {
                 </Link>
               ))}
               <Link to="/resume" onClick={closeMenu} style={{ width: "100%" }}>
-                <button className="btn-primary mobile-cta-btn">
+                <button className="btn-primary mobile-cta-btn" type="button">
                   Download CV
                 </button>
               </Link>
@@ -162,17 +170,18 @@ function App() {
             <div className="logo-area-footer">
               <span className="footer-name">Mukhtar Abdullahi</span>
               <span>
-                Product‑driven developer building real platforms across Africa.
+                Computer Science student and full‑stack developer, building
+                African‑focused event, education, and AI‑assisted platforms.
               </span>
             </div>
             <div className="newsletter-box">
-              <p>Open for remote/onsite roles and collaborations.</p>
+              <p>Open to software roles, internships, and product collaborations.</p>
               <div className="input-group">
                 <input
                   type="email"
                   placeholder="Your best email for opportunities"
                 />
-                <button>Notify Me</button>
+                <button type="button">Notify me</button>
               </div>
             </div>
           </div>
@@ -187,7 +196,8 @@ function App() {
               <Link to="/experience">Experience</Link>
               <Link to="/resume">Resume</Link>
             </div>
-            <div className="footer-col">
+
+            <div className="footer-col footer-col-contact">
               <h4>Contact</h4>
               <div className="footer-contact-item">
                 <MapPin size={16} />
@@ -204,18 +214,23 @@ function App() {
                 </a>
               </div>
             </div>
-            <div className="footer-col">
+
+            <div className="footer-col footer-col-contact">
               <h4>Profiles</h4>
               <div className="footer-contact-item">
                 <Github size={16} />
-                <a href="https://github.com" target="_blank" rel="noreferrer">
+                <a
+                  href="https://github.com"
+                  target="_blank"
+                  rel="noreferrer"
+                >
                   GitHub
                 </a>
               </div>
               <div className="footer-contact-item">
                 <Linkedin size={16} />
                 <a
-                  href="https://linkedin.com"
+                  href="https://www.linkedin.com/in/bakorimukhtar/"
                   target="_blank"
                   rel="noreferrer"
                 >
@@ -229,22 +244,29 @@ function App() {
                 </a>
               </div>
             </div>
+
             <div className="footer-col footer-col-affiliate">
-              <h4>Focus Areas</h4>
+              <h4>Focus areas</h4>
               <div className="footer-contact-item">
                 <span>Event technology (Rijxa)</span>
               </div>
               <div className="footer-contact-item">
-                <span>School & education platforms</span>
+                <span>School &amp; education platforms</span>
               </div>
               <div className="footer-contact-item">
-                <span>AI‑assisted products & systems</span>
+                <span>AI‑assisted products &amp; workflows</span>
+              </div>
+              <div className="footer-contact-item">
+                <span>Lyrics &amp; metadata systems (Musixmatch)</span>
               </div>
             </div>
           </div>
 
           <div className="footer-bottom">
-            <p>© {new Date().getFullYear()} Mukhtar Abdullahi. All rights reserved.</p>
+            <p>
+              © {new Date().getFullYear()} Mukhtar Abdullahi. Built as a
+              living portfolio and learning log.
+            </p>
           </div>
         </div>
       </footer>
@@ -260,10 +282,7 @@ function NavLinkItem({ to, label }) {
   const isActive = location.pathname === to;
 
   return (
-    <Link
-      to={to}
-      className={`nav-link ${isActive ? "active" : ""}`}
-    >
+    <Link to={to} className={`nav-link ${isActive ? "active" : ""}`}>
       {label}
     </Link>
   );
