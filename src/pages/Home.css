@@ -3,6 +3,10 @@
 .home {
   position: relative;
   z-index: 1;
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+  overflow-x: hidden;
 }
 
 /* Background blobs for hero */
@@ -49,6 +53,7 @@
   gap: 42px;
   align-items: center;
   padding-bottom: 40px;
+  width: 100%;
 }
 
 .hero-left {
@@ -154,6 +159,7 @@
   flex-wrap: wrap;
   gap: 14px;
   margin-top: 10px;
+  width: 100%;
 }
 
 .hero-meta-item {
@@ -166,6 +172,7 @@
     rgba(15, 23, 42, 0.96)
   );
   min-width: 210px;
+  flex: 1 1 210px;
 }
 
 .hero-meta-label {
@@ -199,6 +206,8 @@
     0 20px 40px rgba(15, 23, 42, 0.9),
     0 0 0 1px rgba(15, 23, 42, 0.9);
   transform-origin: center;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .hero-card--secondary {
@@ -293,6 +302,8 @@
   grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
   gap: 20px;
   margin-top: 18px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .home-panel {
@@ -304,6 +315,8 @@
     rgba(56, 189, 248, 0.15),
     rgba(15, 23, 42, 0.98)
   );
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .home-panel--accent {
@@ -445,10 +458,24 @@
   }
 
   .hero-meta-item {
-    min-width: 100%;
+    min-width: 0;
+    width: 100%;
+  }
+
+  .hero-right,
+  .hero-card,
+  .home-panel {
+    width: 100%;
   }
 
   .skills-grid {
     grid-template-columns: minmax(0, 1fr);
+  }
+
+  /* prevent blobs pushing layout horizontally */
+  .hero-blob--one,
+  .hero-blob--two,
+  .hero-blob--three {
+    max-width: 260px;
   }
 }
